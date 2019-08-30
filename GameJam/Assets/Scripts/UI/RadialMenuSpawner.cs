@@ -14,6 +14,7 @@ public class RadialMenuSpawner : MonoBehaviour
 
     public void spawnMenu(){
         RadialMenu newMenu = Instantiate(menuPrefab) as RadialMenu;
+        Debug.Log("Spawned");
         newMenu.transform.SetParent(transform,false);
         newMenu.transform.position = Camera.main.ScreenToViewportPoint(Input.mousePosition);
         Debug.Log(Camera.main.ScreenToViewportPoint(Input.mousePosition));
