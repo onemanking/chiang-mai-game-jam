@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Officer
+  - Prisoner
   layers:
   - Default
   - TransparentFX
