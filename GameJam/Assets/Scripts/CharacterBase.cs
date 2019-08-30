@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-abstract public class CharacterBase : MonoBehaviour
+public abstract class CharacterBase : MonoBehaviour
 {
 	[SerializeField] protected float m_Hp;
 	[SerializeField] protected float m_Damage;
@@ -36,6 +36,12 @@ abstract public class CharacterBase : MonoBehaviour
 	protected virtual void TakeDamage(float _dmg)
 	{
 		m_Hp -= _dmg;
+		if (m_Hp <= 0) Dead();
+	}
+
+	protected virtual void Dead()
+	{
+		Destroy(gameObject);
 	}
 
 	protected abstract bool IsCanAttack(string _tag, out CharacterBase _target);
