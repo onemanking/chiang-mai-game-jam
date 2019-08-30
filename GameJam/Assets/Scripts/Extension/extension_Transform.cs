@@ -29,6 +29,17 @@ public static class extension_Transform
     /// <summary>
     /// 
     /// </summary>
+    public static Vector3 TileUp(this Transform hTransform,int nTileCount)
+    {
+        if (hTransform == null)
+            return Vector3.zero;
+
+        return CGlobal_TilemapManager.GetNextTileInThisDirection(hTransform.position, TileDirection.Up,nTileCount);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     public static Vector3 TileDown(this Transform hTransform)
     {
         if (hTransform == null)
@@ -36,6 +47,18 @@ public static class extension_Transform
 
         return CGlobal_TilemapManager.GetNextTileInThisDirection(hTransform.position, TileDirection.Down);
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public static Vector3 TileDown(this Transform hTransform, int nTileCount)
+    {
+        if (hTransform == null)
+            return Vector3.zero;
+
+        return CGlobal_TilemapManager.GetNextTileInThisDirection(hTransform.position, TileDirection.Down,nTileCount);
+    }
+
 
     /// <summary>
     /// 
@@ -51,11 +74,33 @@ public static class extension_Transform
     /// <summary>
     /// 
     /// </summary>
+    public static Vector3 TileLeft(this Transform hTransform,int nTileCount)
+    {
+        if (hTransform == null)
+            return Vector3.zero;
+
+        return CGlobal_TilemapManager.GetNextTileInThisDirection(hTransform.position, TileDirection.Left,nTileCount);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     public static Vector3 TileRight(this Transform hTransform)
     {
         if (hTransform == null)
             return Vector3.zero;
 
         return CGlobal_TilemapManager.GetNextTileInThisDirection(hTransform.position, TileDirection.Right);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public static Vector3 TileRight(this Transform hTransform,int nTileCount)
+    {
+        if (hTransform == null)
+            return Vector3.zero;
+
+        return CGlobal_TilemapManager.GetNextTileInThisDirection(hTransform.position, TileDirection.Right,nTileCount);
     }
 }

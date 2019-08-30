@@ -15,7 +15,7 @@ public enum TileDirection
 
 #endregion
 
-public class CGlobal_TilemapManager : MonoBehaviour
+public sealed class CGlobal_TilemapManager : MonoBehaviour
 {
     #region Variable
 
@@ -124,30 +124,41 @@ public class CGlobal_TilemapManager : MonoBehaviour
         return Instance.MainGetNextTileInThisDirection(vPosition,eDirection);
     }
 
-    Vector3 MainGetNextTileInThisDirection(Vector3 vPosition, TileDirection eDirection)
+    /// <summary>
+    /// 
+    /// </summary>
+    public static Vector3 GetNextTileInThisDirection(Vector3 vPosition, TileDirection eDirection,int nTileCount)
+    {
+        return Instance.MainGetNextTileInThisDirection(vPosition, eDirection,nTileCount);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    Vector3 MainGetNextTileInThisDirection(Vector3 vPosition, TileDirection eDirection,int nTileCount = 1)
     {
         var vPos = GetTilePosition(vPosition);
 
         switch (eDirection)
         {
             case TileDirection.Up:                
-                vPos.x += m_hMainTilemap.tileAnchor.x;
-                vPos.y += m_hMainTilemap.tileAnchor.y * 0.5f;
+                vPos.x += m_hMainTilemap.tileAnchor.x * nTileCount;
+                vPos.y += (m_hMainTilemap.tileAnchor.y * 0.5f) * nTileCount;
                 break;
 
             case TileDirection.Down:
-                vPos.x -= m_hMainTilemap.tileAnchor.x;
-                vPos.y -= m_hMainTilemap.tileAnchor.y * 0.5f;
+                vPos.x -= m_hMainTilemap.tileAnchor.x * nTileCount;
+                vPos.y -= (m_hMainTilemap.tileAnchor.y * 0.5f) * nTileCount;
                 break;
 
             case TileDirection.Left:
-                vPos.x -= m_hMainTilemap.tileAnchor.x;
-                vPos.y += m_hMainTilemap.tileAnchor.y * 0.5f;
+                vPos.x -= m_hMainTilemap.tileAnchor.x * nTileCount;
+                vPos.y += (m_hMainTilemap.tileAnchor.y * 0.5f) * nTileCount;
                 break;
 
             case TileDirection.Right:
-                vPos.x += m_hMainTilemap.tileAnchor.x;
-                vPos.y -= m_hMainTilemap.tileAnchor.y * 0.5f;
+                vPos.x += m_hMainTilemap.tileAnchor.x * nTileCount;
+                vPos.y -= (m_hMainTilemap.tileAnchor.y * 0.5f) * nTileCount;
                 break;
         }
 
