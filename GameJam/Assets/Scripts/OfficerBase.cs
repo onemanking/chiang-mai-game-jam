@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class OfficerBase : CharacterBase
 {
-	[SerializeField] protected float attackRange;
+	[SerializeField] protected int attackRange;
 
 	protected override bool IsCanAttack(string _tag, out CharacterBase _target)
 	{
-		Debug.DrawLine(transform.position, transform.TileDown());
-		var hits = Physics2D.LinecastAll(transform.position, transform.TileDown());
+		Debug.DrawLine(transform.position, transform.TileDown(attackRange));
+		var hits = Physics2D.LinecastAll(transform.position, transform.TileDown(attackRange));
 		foreach (var hit in hits)
 		{
 			if (hit.collider)
