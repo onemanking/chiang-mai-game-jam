@@ -43,6 +43,8 @@ public class RadialMenu : MonoBehaviour
 
     void SelectedEvent(){
         //Call upgrade police here
-        CGlobal_StatusManager.UpgradeCharacter(owner, 1, 0.1f);
+
+        // Run selected button event add on.
+        selected.RunEventAddOn(owner);
     }
 }

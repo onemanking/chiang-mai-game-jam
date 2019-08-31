@@ -98,18 +98,18 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    public static bool UpgradeCharacter(Transform hCharacter,float fUpdamage,float fDecressAttackDelay)
+    public static bool UpgradeCharacter(Transform hCharacter,float fUpdamage,float fDecreadAttackDelay0)
     {
         if (m_hInstance == null)
             return false;
 
-        return Instance.MainUpgradeCharacter(hCharacter,fUpdamage,fDecressAttackDelay);
+        return Instance.MainUpgradeCharacter(hCharacter,fUpdamage,fDecreadAttackDelay0);
     }
 
     /// <summary>
     /// 
     /// </summary>
-    bool MainUpgradeCharacter(Transform hCharacter, float fUpdamage = 1f, float fDecressAttackDelay = 0.1f)
+    bool MainUpgradeCharacter(Transform hCharacter, float fUpdamage = 1f, float fDecreadAttackDelay = 0.1f)
     {
         // Maybe change.
         if (!CheckCanUpgradeCharacter(hCharacter))
@@ -119,7 +119,7 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
 
         CGlobal_InventoryManager.MoneyDown(GetUpgrageCost(hOfficerBase.Level));
 
-        hOfficerBase.Upgrade(fUpdamage, fDecressAttackDelay);
+        hOfficerBase.Upgrade(fUpdamage, fDecreadAttackDelay);
         
         return true;
     }

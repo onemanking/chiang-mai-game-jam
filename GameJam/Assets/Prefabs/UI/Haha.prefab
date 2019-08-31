@@ -89,3 +89,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myMenu: {fileID: 0}
+  m_arrEventAddOn:
+  - {fileID: 11400000, guid: 45fadda07dd123b488d920ef32825e6d, type: 2}
