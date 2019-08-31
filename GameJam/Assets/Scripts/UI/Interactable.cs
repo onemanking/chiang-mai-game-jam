@@ -5,7 +5,7 @@ using UnityEngine;
 public class Interactable : MonoBehaviour
 {
     void OnMouseDown() {
-        RadialMenuSpawner.spawner.spawnMenu();
+        RadialMenuSpawner.spawner.spawnMenu(transform.position);
         Debug.Log("clicked  ");
     }
 }
