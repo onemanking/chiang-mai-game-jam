@@ -23,8 +23,12 @@ public class GameManager : MonoBehaviour
 	}
 	[SerializeField] private Transform[] m_SpawnPoint;
 	[SerializeField] private PrisonerBase m_PrisonerPrefab;
-	[SerializeField] private FloatReactiveProperty m_TotalHp;
+	[SerializeField] private FloatReactiveProperty m_WallHp = new FloatReactiveProperty(100f);
 	[SerializeField] private int m_BossWaveEvery;
+
+	[Header("Wall")]
+	[SerializeField] private Renderer m_WallRenderer;
+	[SerializeField] private Material m_FlashMat;
 
 	[Header("UI")]
 	[SerializeField] private Image m_HpBar;
@@ -46,7 +50,17 @@ public class GameManager : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		m_TotalHp.Subscribe(x => m_HpBar.fillAmount = m_TotalHp.Value / 100).AddTo(this);
+		// Observeable for wall taken damage
+		m_WallHp.Subscribe(x =>
+		{
+			m_HpBar.fillAmount = m_WallHp.Value / 100;
+			if (x <= 0)
+			{
+				// GAME OVER
+				// Application.Quit();
+				Debug.LogWarning("GameOver");
+			}
+		}).AddTo(this);
 	}
 
 	// Update is called once per frame
@@ -75,14 +89,8 @@ public class GameManager : MonoBehaviour
 	#region WALL
 	public void WallTakeDamage(float _dmg)
 	{
-		m_TotalHp.Value -= _dmg;
-
-		// TODO
-		if (m_TotalHp.Value <= 0)
-		{
-			// GAME OVER
-			Debug.LogWarning("GameOver");
-		}
+		m_WallHp.Value -= _dmg;
+		// m_WallRenderer.material = m_FlashMat;
 	}
 	#endregion
 }
