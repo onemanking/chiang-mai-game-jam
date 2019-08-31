@@ -13,6 +13,9 @@ public abstract class abst_Skill : ScriptableObject
 
     public abstract float CooldownTime { get; }
 
+    // Status
+    public abstract abst_Data_CharacterStatus StatusData { get; }
+
     public abstract void UseSkill(Transform hOfficer);
 }
 
