@@ -4,36 +4,46 @@ using UnityEngine;
 
 public class OfficerBase : CharacterBase
 {
+	[SerializeField] private int m_Level = 1;
+
+	public int Level { get => m_Level; }
+
 	protected override bool IsCanAttack(TargetTag _tag, out CharacterBase _target)
 	{
-		var hits = Physics.BoxCastAll(transform.position, new Vector2(coll.bounds.extents.x, coll.bounds.extents.y * 10), transform.forward, Quaternion.LookRotation(transform.forward), m_AttackRange);
-		foreach (var hit in hits)
+		RaycastHit hit;
+		if (Physics.BoxCast(transform.position, new Vector2(coll.bounds.extents.x, coll.bounds.extents.y * 10), transform.forward, out hit, Quaternion.LookRotation(transform.forward), m_AttackRange, layerMask))
 		{
-			if (hit.collider)
-			{
-				if (hit.collider.gameObject != gameObject)
-				{
-					_target = hit.collider.CompareTag(_tag.ToString()) ? hit.collider.GetComponent<CharacterBase>() : null;
-					return _target != null;
-				}
-				else
-				{
-					continue;
-				}
-			}
-			else
-			{
-				continue;
-			}
+			_target = hit.collider.CompareTag(_tag.ToString()) ? hit.collider.GetComponent<CharacterBase>() : null;
+			return _target != null;
 		}
-
-		_target = null;
-		return false;
+		else
+		{
+			_target = null;
+			return false;
+		}
 	}
 
-	private void OnDrawGizmos()
+	public override void TakeDamage(float _dmg)
 	{
-		if (coll)
-			Gizmos.DrawWireCube(transform.position, new Vector3(coll.bounds.extents.x, coll.bounds.extents.y * 10, coll.bounds.size.z * m_AttackRange));
+		GameManager.Instance.WallTakeDamage(_dmg);
+	}
+
+	public virtual void Upgrade(float _upDmg, float _decreadAttackDelay)
+	{
+		if (m_Level >= Mathf.Infinity) return;
+
+		m_Level += 1;
+		UpgradeDamage(_upDmg);
+		UpgradeAttackDelay(_decreadAttackDelay);
+	}
+
+	protected virtual void UpgradeDamage(float _upDmg)
+	{
+		m_Damage += _upDmg;
+	}
+
+	protected virtual void UpgradeAttackDelay(float _decreadAttackDelay)
+	{
+		m_AttackDelay = m_AttackDelay != 0 ? m_AttackDelay -= _decreadAttackDelay : 0;
 	}
 }

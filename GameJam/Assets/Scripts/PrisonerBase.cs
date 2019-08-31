@@ -6,8 +6,17 @@ public class PrisonerBase : CharacterBase
 {
 	[SerializeField] protected float m_Speed;
 
+	private Transform lookingTarget;
+
 	void Start()
 	{
+		RaycastHit hit;
+		var boundSize = new Vector2(coll.bounds.extents.x, coll.bounds.extents.y * 2);
+		var startPos = new Vector3(transform.position.x, transform.position.y + 5, transform.position.z);
+		if (Physics.BoxCast(startPos, boundSize, transform.forward, out hit, Quaternion.LookRotation(transform.forward), 100, layerMask))
+		{
+			lookingTarget = hit.collider.CompareTag(m_TargetTag.ToString()) ? hit.collider.transform : null;
+		}
 	}
 
 	protected override void Update()
@@ -18,41 +27,31 @@ public class PrisonerBase : CharacterBase
 
 	protected virtual void Move()
 	{
+		LookingToTarget();
 		rigid.velocity = transform.forward * m_Speed;
+	}
+
+	protected override void LookingToTarget()
+	{
+		foreach (var tr in rotatableParts)
+		{
+			tr.LookAt(lookingTarget);
+		}
 	}
 
 	protected override bool IsCanAttack(TargetTag _tag, out CharacterBase _target)
 	{
-		var hits = Physics.BoxCastAll(transform.position, new Vector2(coll.bounds.extents.x, coll.bounds.extents.y * 10), transform.forward, Quaternion.LookRotation(transform.forward), m_AttackRange);
-		foreach (var hit in hits)
+		RaycastHit hit;
+		var boundSize = new Vector2(coll.bounds.extents.x, coll.bounds.extents.y * 10);
+		if (Physics.BoxCast(transform.position, boundSize, transform.forward, out hit, Quaternion.LookRotation(transform.forward), m_AttackRange, layerMask))
 		{
-			if (hit.collider)
-			{
-				if (hit.collider.gameObject != gameObject)
-				{
-					_target = hit.collider.CompareTag(_tag.ToString()) ? hit.collider.GetComponent<CharacterBase>() : null;
-					return _target != null;
-				}
-				else
-				{
-					continue;
-				}
-			}
-			else
-			{
-				continue;
-			}
+			_target = hit.collider.CompareTag(_tag.ToString()) ? hit.collider.GetComponent<CharacterBase>() : null;
+			return _target != null;
 		}
-
-		_target = null;
-		return false;
-	}
-
-	private void OnDrawGizmos()
-	{
-		if (coll)
-			Gizmos.DrawWireCube(transform.position, new Vector3(coll.bounds.extents.x, coll.bounds.extents.y * 10, coll.bounds.size.z * m_AttackRange));
+		else
+		{
+			_target = null;
+			return false;
+		}
 	}
 }
-
-

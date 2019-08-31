@@ -120,6 +120,9 @@ public class CGlobal_InventoryManager : MonoBehaviour
     /// </summary>
     void MainAddActionMoneyChange(UnityAction<int> hAction)
     {
+        // Call change at first add.
+        hAction?.Invoke(m_hInventoryData.m_nMoney);
+
         m_actMoneyChange += hAction;
     }
 

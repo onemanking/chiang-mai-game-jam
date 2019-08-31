@@ -50,6 +50,25 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
 
     #region Main
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public static bool UpgradeCharacter(Transform hCharacter)
+    {
+        if (m_hInstance == null)
+            return false;
+
+        return Instance.MainUpgradeCharacter(hCharacter);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    bool MainUpgradeCharacter(Transform hCharacter)
+    {
+        return false;
+    }
+
     #endregion
 
     #region Helper
