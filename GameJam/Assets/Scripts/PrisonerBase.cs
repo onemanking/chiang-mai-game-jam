@@ -66,4 +66,9 @@ public class PrisonerBase : CharacterBase
 	{
 		m_Speed = _speed;
 	}
+
+    public float GetSpeed()
+    {
+        return m_Speed;
+    }
 }

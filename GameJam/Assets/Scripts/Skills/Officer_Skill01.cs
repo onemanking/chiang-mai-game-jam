@@ -7,7 +7,7 @@ public class Officer_Skill01 : Officer_BaseSkill
 {
     public override void UseSkill(Transform hOfficer)
     {
-        var arrGO = GameObject.FindGameObjectsWithTag("Prisoner");
+        var arrGO = GameObject.FindGameObjectsWithTag(TagType.Prisoner.String());
 
         if (arrGO == null || arrGO.Length <= 0)
             return;
