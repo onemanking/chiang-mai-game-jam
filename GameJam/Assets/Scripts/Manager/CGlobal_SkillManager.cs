@@ -70,6 +70,8 @@ public sealed class CGlobal_SkillManager : MonoBehaviour
 
     Dictionary<int, UnityAction<Sprite>> m_dicActSpriteChange = new Dictionary<int, UnityAction<Sprite>>();
 
+    Dictionary<int, UnityAction<float>> m_dicActCooldownChange = new Dictionary<int, UnityAction<float>>();
+
     #endregion
 
     #region Base - Mono
@@ -170,6 +172,45 @@ public sealed class CGlobal_SkillManager : MonoBehaviour
         m_dicActSpriteChange[nOfficerID] -= hAction;
     }
 
+    public static void AddActionCooldownChange(int nOfficerID,UnityAction<float> hAction)
+    {
+        Instance?.MainAddActionCooldownChange(nOfficerID, hAction);
+    }
+
+    void MainAddActionCooldownChange(int nOfficerID, UnityAction<float> hAction)
+    {
+        if (!m_dicActCooldownChange.ContainsKey(nOfficerID))
+        {
+            m_dicActCooldownChange.Add(nOfficerID, hAction);
+        }
+        else
+        {
+            m_dicActCooldownChange[nOfficerID] += hAction;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public static void RemoveActionCooldownChange(int nOfficerID,UnityAction<float> hAction)
+    {
+        if (m_hInstance == null)
+            return;
+
+        Instance?.MainRemoveActionCooldownChange(nOfficerID, hAction);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void MainRemoveActionCooldownChange(int nOfficerID, UnityAction<float> hAction)
+    {
+        if (!m_dicActCooldownChange.ContainsKey(nOfficerID))
+            return;
+
+        m_dicActCooldownChange[nOfficerID] -= hAction;
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -234,8 +275,10 @@ public sealed class CGlobal_SkillManager : MonoBehaviour
             // Rewrite data
             m_dicOfficerSkill[nOfficerID] = hOfficerSkill;
 
-            // Update UI.
-            SkillButtonCooldownChange(nOfficerID);
+            if (m_dicActCooldownChange.ContainsKey(nOfficerID))
+            {
+                m_dicActCooldownChange[nOfficerID]?.Invoke(0);
+            }
 
             m_hSkillCutsceneController?.Show(hOfficerSkill.m_hSkill.SkillCutsceneSprite);
         }
@@ -269,9 +312,14 @@ public sealed class CGlobal_SkillManager : MonoBehaviour
 
         foreach(var hOfficerSkillKeyPair in m_dicTempOfficerSkill)
         {
-            m_dicOfficerSkill[hOfficerSkillKeyPair.Key] = hOfficerSkillKeyPair.Value;
+            var hValue = hOfficerSkillKeyPair.Value;
+            m_dicOfficerSkill[hOfficerSkillKeyPair.Key] = hValue;
 
-            SkillButtonCooldownChange(hOfficerSkillKeyPair.Key);
+            if (hValue.m_hSkill.CooldownTime != 0 && m_dicActCooldownChange.ContainsKey(hOfficerSkillKeyPair.Key))
+            {
+                float fCalCooldown = 1 - (hValue.m_fCooldownTime / hValue.m_hSkill.CooldownTime);
+                m_dicActCooldownChange[hOfficerSkillKeyPair.Key]?.Invoke(fCalCooldown);
+            }
         }
     }
 
@@ -287,29 +335,6 @@ public sealed class CGlobal_SkillManager : MonoBehaviour
         var hGO = new GameObject();
         hGO.AddComponent<CGlobal_SkillManager>();
         hGO.name = "Skill Manager";
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    void SkillButtonCooldownChange(int nOfficerID)
-    {
-        if (m_lstButtonSkill.Count <= 0 || !m_dicOfficerSkill.ContainsKey(nOfficerID) || m_dicOfficerSkill[nOfficerID].m_hSkill == null)
-            return;
-
-        for(int i = 0; i < m_lstButtonSkill.Count; i++)
-        {
-            var hButtonSkill = m_lstButtonSkill[i];
-            if (hButtonSkill == null || hButtonSkill.SkillOfficerID != nOfficerID)
-                continue;
-
-            float fCooldownTimeCount = m_dicOfficerSkill[nOfficerID].m_fCooldownTime;
-            float fCooldownTime = m_dicOfficerSkill[nOfficerID].m_hSkill.CooldownTime;
-
-            hButtonSkill.CooldownChange(fCooldownTimeCount,fCooldownTime);
-
-            break;
-        }
     }
 
     /// <summary>

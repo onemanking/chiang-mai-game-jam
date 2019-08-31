@@ -11,6 +11,7 @@ public class UI_SkillCutsceneController : MonoBehaviour
 #pragma warning disable 0649
 
     [SerializeField] float m_fShowDuration;
+    [SerializeField] bool m_bShowNativeSize;
 
 #pragma warning restore 0649
     #endregion
@@ -47,6 +48,9 @@ public class UI_SkillCutsceneController : MonoBehaviour
             return;
 
         m_hImage.sprite = hSprite;
+
+        if (m_bShowNativeSize)
+            m_hImage.SetNativeSize();
 
         Color hColor = m_hImage.color;
         hColor.a = 1;
