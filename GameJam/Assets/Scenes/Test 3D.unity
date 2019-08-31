@@ -148,6 +148,7 @@ MonoBehaviour:
   - {fileID: 1110636187}
   - {fileID: 349625754}
   - {fileID: 699550574}
+  m_Level: 0
 --- !u!114 &11609319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,6 +242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_fShowDuration: 1.5
+  m_bShowNativeSize: 0
 --- !u!114 &28546023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1925,6 +1927,7 @@ MonoBehaviour:
   - {fileID: 632395011}
   - {fileID: 310375621}
   - {fileID: 484302834}
+  m_Level: 0
 --- !u!114 &1172757371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2519,6 +2522,7 @@ MonoBehaviour:
   - {fileID: 1508001259}
   - {fileID: 398645235}
   - {fileID: 1217612627}
+  m_Level: 0
 --- !u!136 &1427692246
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2999,6 +3003,7 @@ MonoBehaviour:
   - {fileID: 2076370032}
   - {fileID: 353011701}
   - {fileID: 798007169}
+  m_Level: 0
 --- !u!114 &1872250672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3423,6 +3428,7 @@ MonoBehaviour:
   - {fileID: 1777460651}
   - {fileID: 352338514}
   - {fileID: 1006083557}
+  m_Level: 0
 --- !u!114 &2033913520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3623,6 +3629,7 @@ MonoBehaviour:
   - {fileID: 601639321}
   - {fileID: 255308522}
   - {fileID: 1370672654}
+  m_Level: 0
 --- !u!114 &2115678101
 MonoBehaviour:
   m_ObjectHideFlags: 0

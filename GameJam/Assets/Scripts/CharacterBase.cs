@@ -12,10 +12,10 @@ public abstract class CharacterBase : MonoBehaviour
 		Prisoner
 	}
 
-	[SerializeField] protected float m_Hp;
-	[SerializeField] protected float m_Damage;
-	[SerializeField] protected float m_AttackDelay;
-	[SerializeField] protected float m_AttackRange;
+	[SerializeField] protected float m_Hp = 100;
+	[SerializeField] protected float m_Damage = 10;
+	[SerializeField] protected float m_AttackDelay = 1;
+	[SerializeField] protected float m_AttackRange = 1;
 	[SerializeField] protected TargetTag m_TargetTag;
 
 	[Header("Animation")]
