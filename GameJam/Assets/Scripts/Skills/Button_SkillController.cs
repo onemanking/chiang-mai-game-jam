@@ -11,7 +11,7 @@ public class Button_SkillController : MonoBehaviour
 #pragma warning disable 0649
 
     [SerializeField] int m_nSkillOfficerID;
-    [SerializeField] Slider m_hCooldownSlider;
+    //[SerializeField] Slider m_hCooldownSlider;
 
     [SerializeField] bool m_bShowNativeSideImage;
 
@@ -21,7 +21,8 @@ public class Button_SkillController : MonoBehaviour
     public int SkillOfficerID { get { return m_nSkillOfficerID; } }
 
     Button m_hButton;
-    Image m_hImage;
+    [SerializeField] private Image m_hImage;
+    [SerializeField] private Image m_hBackGround;
 
     #endregion
 
@@ -30,21 +31,20 @@ public class Button_SkillController : MonoBehaviour
     private void Awake()
     {
         m_hButton = GetComponent<Button>();
-        m_hImage = GetComponent<Image>();
 
         CGlobal_SkillManager.RegisterButtonSkill(this);
     }
 
     private void OnEnable()
     {
-        CGlobal_SkillManager.AddActionSpriteChange(m_nSkillOfficerID, SpriteChange);
+        //CGlobal_SkillManager.AddActionSpriteChange(m_nSkillOfficerID, SpriteChange);
 
         CGlobal_SkillManager.AddActionCooldownChange(m_nSkillOfficerID, CooldownChange);
     }
 
     private void OnDisable()
     {
-        CGlobal_SkillManager.RemoveActionSpriteChange(m_nSkillOfficerID, SpriteChange);
+        //CGlobal_SkillManager.RemoveActionSpriteChange(m_nSkillOfficerID, SpriteChange);
 
         CGlobal_SkillManager.RemoveActionCooldownChange(m_nSkillOfficerID, CooldownChange);
     }
@@ -59,6 +59,7 @@ public class Button_SkillController : MonoBehaviour
     public void ClickSkill()
     {
         CGlobal_SkillManager.UseSkill(m_nSkillOfficerID);
+        m_hImage.color = new Color32(255,255,255,125);
     }
 
     /// <summary>
@@ -66,20 +67,12 @@ public class Button_SkillController : MonoBehaviour
     /// </summary>
     void CooldownChange(float fValue)
     {
-        if (m_hCooldownSlider)
-        {
-            m_hCooldownSlider.maxValue = 1;
-            m_hCooldownSlider.value = 1 - fValue;
+        Debug.Log("cooldown " + fValue);
+        m_hBackGround.fillAmount = fValue;
+        if(fValue >= 1f){
+            m_hImage.color = new Color32(255,255,255,255);
         }
-        else
-        {
-            m_hImage.fillAmount = fValue;
-        }
-
-        if (fValue < 1)
-            m_hImage.raycastTarget = false;
-        else
-            m_hImage.raycastTarget = true;
+           
     }
 
     #endregion

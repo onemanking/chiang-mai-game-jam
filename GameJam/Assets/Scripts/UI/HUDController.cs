@@ -10,9 +10,9 @@ public class HUDController : MonoBehaviour
 
     private float[] cooldown = {0f,0f,0f,0f};
     private float[] cooldownRate = {0.75f,0.5f,0.42f,0.35f};
-    void Start()
+    void Awake()
     {
-        
+        //CGlobal_SkillManager.RegisterButtonSkill(this);
     }
 
     // Update is called once per frame
