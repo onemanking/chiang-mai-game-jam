@@ -47,4 +47,25 @@ public class OfficerBase : CharacterBase
 		m_AttackDelay = m_AttackDelay > 0 ? m_AttackDelay -= _decreadAttackDelay : 0;
 		m_AttackDelay = m_AttackDelay < 0 ? 0 : m_AttackDelay;
 	}
+
+
+	public void SetDamage(float _dmg)
+	{
+		m_Damage = _dmg;
+	}
+
+	public float GetDamage()
+	{
+		return m_Damage;
+	}
+
+	public void SetAttackDelay(float _attackDelay)
+	{
+		m_AttackDelay = _attackDelay;
+	}
+
+	public float GetAttackDelay()
+	{
+		return m_AttackDelay;
+	}
 }
