@@ -6,6 +6,7 @@ using UnityEngine;
 
 public enum TagType
 {
+    None,
     Officer,
     Prisoner,
 }
@@ -19,6 +20,20 @@ namespace Helper
     {
         public const string m_sOfficer = "Officer";
         public const string m_sPrisoner = "Prisoner";
+
+        public static TagType GetTagType(string sTagName)
+        {
+            switch (sTagName)
+            {
+                case m_sOfficer:
+                    return TagType.Officer;
+
+                case m_sPrisoner:
+                    return TagType.Prisoner;
+            }
+
+            return TagType.None;
+        }
     }
 }
 

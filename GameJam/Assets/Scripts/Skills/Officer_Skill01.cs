@@ -7,15 +7,15 @@ public class Officer_Skill01 : Officer_BaseSkill
 {
     public override void UseSkill(Transform hOfficer)
     {
-        var arrGO = GameObject.FindGameObjectsWithTag(TagType.Prisoner.String());
+        var lstGO = CGlobal_CharacterManager.GetCharacterList(TagType.Prisoner);
 
-        if (arrGO == null || arrGO.Length <= 0)
+        if (lstGO == null || lstGO.Count <= 0)
             return;
 
-        for(int i = 0; i < arrGO.Length; i++)
+        for(int i = 0; i < lstGO.Count; i++)
         {
             // For test only.
-            arrGO[i].SendMessage("TakeDamage", 50,SendMessageOptions.DontRequireReceiver);
+            lstGO[i].SendMessage("TakeDamage", 50,SendMessageOptions.DontRequireReceiver);
 
 
             //Destroy(arrGO[i]);

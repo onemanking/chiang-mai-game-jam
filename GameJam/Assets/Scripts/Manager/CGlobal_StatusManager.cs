@@ -6,6 +6,22 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
 {
     #region Struct
 
+    struct BuffAttackCharacterData
+    {
+        public OfficerBase m_hBase;
+        public float m_fOriginalDamage;
+        public float m_fOriginalAttackDelay;
+    }
+
+    struct BuffAllAttackData
+    {
+        public List<BuffAttackCharacterData> m_lstCharacterData;
+        public bool m_bBuffing;
+        public float m_fBuffDamageMultiplier;
+        public float m_fBuffDecreaseAttackDelay;
+        public float m_fBuffDuration;
+    }
+
     struct DebuffSpeedCharacterData
     {
         public PrisonerBase m_hBase;
@@ -47,6 +63,8 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
 
     static CGlobal_StatusManager m_hInstance;
 
+    BuffAllAttackData m_hBuffAllAttackData = new BuffAllAttackData();
+
     DebuffAllSpeedData m_hDebuffAllSpeedData = new DebuffAllSpeedData();
 
     WaitForEndOfFrame m_wWaitEndFrame = new WaitForEndOfFrame();
@@ -80,6 +98,7 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
 
     private void Update()
     {
+        BuffAttackUpdate();
         DebuffSpeedUpdate();  
     }
 
@@ -157,8 +176,56 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
         CGlobal_InventoryManager.MoneyDown(GetUpgrageCost(hOfficerBase.Level));
 
         hOfficerBase.Upgrade(fUpdamage, fDecreadAttackDelay);
+
+        RebuffAttackUpgradeCharacter(hCharacter);
         
         return true;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public static void BuffAllOfficerAttack(float fBuffDamageMultiplier, float fBuffDecreaseAttackDelay, float fBuffDuration)
+    {
+        Instance?.MainBuffAllOfficerAttack(fBuffDamageMultiplier,fBuffDecreaseAttackDelay,fBuffDuration);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void MainBuffAllOfficerAttack(float fBuffDamageMultiplier,float fBuffDecreaseAttackDelay,float fBuffDuration)
+    {
+        var lstOfficer = CGlobal_CharacterManager.GetCharacterList(TagType.Officer);
+        if (lstOfficer == null || lstOfficer.Count <= 0)
+            return;
+
+        ResetBuffAllAttackToOriginal();
+
+        m_hBuffAllAttackData.m_bBuffing = true;
+        m_hBuffAllAttackData.m_fBuffDamageMultiplier = fBuffDamageMultiplier;
+        m_hBuffAllAttackData.m_fBuffDecreaseAttackDelay = fBuffDecreaseAttackDelay;
+        m_hBuffAllAttackData.m_fBuffDuration = fBuffDuration;
+
+        for(int i = 0; i < lstOfficer.Count; i++)
+        {
+            var hOfficerBase = lstOfficer[i].GetComponent<OfficerBase>();
+            if (hOfficerBase == null)
+                continue;
+
+            if (m_hBuffAllAttackData.m_lstCharacterData == null)
+                m_hBuffAllAttackData.m_lstCharacterData = new List<BuffAttackCharacterData>();
+
+            m_hBuffAllAttackData.m_lstCharacterData.Add(new BuffAttackCharacterData
+            {
+                m_hBase = hOfficerBase,
+                m_fOriginalDamage = hOfficerBase.GetDamage(),
+                m_fOriginalAttackDelay = hOfficerBase.GetAttackDelay(),
+
+            });
+
+            hOfficerBase.SetDamage(hOfficerBase.GetDamage() * fBuffDamageMultiplier);
+            hOfficerBase.SetAttackDelay(hOfficerBase.GetAttackDelay() - fBuffDecreaseAttackDelay);
+        }
     }
 
     /// <summary>
@@ -174,20 +241,20 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
     /// </summary>
     void MainDebuffAllPrisonerSpeed(float fDebuffSpeedMultiplier, float fDebuffDuration)
     {
-        var arrPrisoner = GameObject.FindGameObjectsWithTag(TagType.Prisoner.String());
+        var lstPrisoner = CGlobal_CharacterManager.GetCharacterList(TagType.Prisoner);
 
-        if (arrPrisoner == null || arrPrisoner.Length <= 0)
+        if (lstPrisoner == null || lstPrisoner.Count <= 0)
             return;
 
-        ResetDebuffSpeedToOriginal();
+        ResetDebuffAllSpeedToOriginal();
 
         m_hDebuffAllSpeedData.m_bDebuffing = true;
         m_hDebuffAllSpeedData.m_fDebuffMultiplier = fDebuffSpeedMultiplier;
         m_hDebuffAllSpeedData.m_fDebuffDuration = fDebuffDuration;
 
-        for(int i = 0; i < arrPrisoner.Length; i++)
+        for(int i = 0; i < lstPrisoner.Count; i++)
         {
-            var hPrisonerBase = arrPrisoner[i].GetComponent<PrisonerBase>();
+            var hPrisonerBase = lstPrisoner[i].GetComponent<PrisonerBase>();
 
             if (hPrisonerBase == null)
                 continue;
@@ -212,6 +279,20 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
+    void BuffAttackUpdate()
+    {
+        if (!m_hBuffAllAttackData.m_bBuffing)
+            return;
+
+        m_hBuffAllAttackData.m_fBuffDuration -= Time.deltaTime;
+
+        if (m_hBuffAllAttackData.m_fBuffDuration <= 0)
+            ResetBuffAllAttackToOriginal();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     void DebuffSpeedUpdate()
     {
         if (!m_hDebuffAllSpeedData.m_bDebuffing)
@@ -220,7 +301,7 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
         m_hDebuffAllSpeedData.m_fDebuffDuration -= Time.deltaTime;
 
         if (m_hDebuffAllSpeedData.m_fDebuffDuration <= 0)
-            ResetDebuffSpeedToOriginal();
+            ResetDebuffAllSpeedToOriginal();
     }
 
     #endregion
@@ -260,7 +341,61 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    void ResetDebuffSpeedToOriginal()
+    void RebuffAttackUpgradeCharacter(Transform hCharacter)
+    {
+        if (hCharacter == null || !m_hBuffAllAttackData.m_bBuffing)
+            return;
+
+        var hOfficerBase = hCharacter.GetComponent<OfficerBase>();
+        if (hOfficerBase == null)
+            return;
+
+        for(int i = 0; i < m_hBuffAllAttackData.m_lstCharacterData.Count; i++)
+        {
+            var hData = m_hBuffAllAttackData.m_lstCharacterData[i];
+            if (hData.m_hBase == null || hData.m_hBase != hOfficerBase)
+                continue;
+
+            hData.m_fOriginalDamage = hOfficerBase.GetDamage();
+            hData.m_fOriginalAttackDelay = hOfficerBase.GetAttackDelay();
+
+            hOfficerBase.SetDamage(hOfficerBase.GetDamage() * m_hBuffAllAttackData.m_fBuffDamageMultiplier);
+            hOfficerBase.SetDamage(hOfficerBase.GetAttackDelay() - m_hBuffAllAttackData.m_fBuffDecreaseAttackDelay);
+
+            // Rewrite data.
+            m_hBuffAllAttackData.m_lstCharacterData[i] = hData;
+            break;
+        }
+        
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void ResetBuffAllAttackToOriginal()
+    {
+        if (m_hBuffAllAttackData.m_lstCharacterData == null || m_hBuffAllAttackData.m_lstCharacterData.Count <= 0)
+            return;
+
+        for(int i = 0; i < m_hBuffAllAttackData.m_lstCharacterData.Count; i++)
+        {
+            var hData = m_hBuffAllAttackData.m_lstCharacterData[i];
+            if (hData.m_hBase == null)
+                continue;
+
+            // Reset to it original.
+            hData.m_hBase.SetDamage(hData.m_fOriginalDamage);
+            hData.m_hBase.SetAttackDelay(hData.m_fOriginalAttackDelay);
+        }
+
+        m_hBuffAllAttackData.m_bBuffing = false;
+        m_hBuffAllAttackData.m_lstCharacterData.Clear();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void ResetDebuffAllSpeedToOriginal()
     {
         if (m_hDebuffAllSpeedData.m_lstCharacterData == null || m_hDebuffAllSpeedData.m_lstCharacterData.Count <= 0)
             return;
