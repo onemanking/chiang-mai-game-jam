@@ -6,6 +6,5 @@ public class Interactable : MonoBehaviour
 {
     void OnMouseDown() {
         RadialMenuSpawner.spawner.spawnMenu(transform);
-        Debug.Log("clicked  ");
     }
 }
