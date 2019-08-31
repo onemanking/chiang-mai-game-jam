@@ -28,7 +28,7 @@ public class RadialMenu : MonoBehaviour
             if(selected){
                 Debug.Log(selected.name);
             }
-           //Destroy(gameObject);
+           Destroy(gameObject);
         }
     }
 }
