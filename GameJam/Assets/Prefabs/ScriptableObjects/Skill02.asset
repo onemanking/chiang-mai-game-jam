@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a944abee291f3334eae090c5f44b3409, type: 3}
-  m_Name: Skill01
+  m_Script: {fileID: 11500000, guid: 68c0876c499ae674b8c3b188e5aa0d9f, type: 3}
+  m_Name: Skill02
   m_EditorClassIdentifier: 
-  m_hSpirte: {fileID: 21300000, guid: 0ae1918621697594395852ab6800b037, type: 3}
-  m_hCutsceneSprite: {fileID: 21300000, guid: 1be6d3feaf327854896816c929737c6e, type: 3}
-  m_fCooldown: 5
+  m_hSpirte: {fileID: 0}
+  m_hCutsceneSprite: {fileID: 0}
+  m_fCooldown: 0
