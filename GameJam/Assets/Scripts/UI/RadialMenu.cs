@@ -9,6 +9,9 @@ public class RadialMenu : MonoBehaviour
     public RadialButton selected;
     public RadialButton[] PrefabArray;
     Camera m_MainCamera;
+
+    public Transform owner;
+
     public void Start()
     {
         m_MainCamera = Camera.main;

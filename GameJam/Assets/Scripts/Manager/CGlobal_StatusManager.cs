@@ -53,6 +53,37 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
+    public static bool CheckCanUpgradeCharacter(Transform hCharacter)
+    {
+        if (m_hInstance == null)
+            return false;
+
+        return Instance.MainCheckCanUpgradeCharacter(hCharacter);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    bool MainCheckCanUpgradeCharacter(Transform hCharacter)
+    {
+        if (hCharacter == null)
+            return false;
+
+        var hOfficerBase = hCharacter.GetComponent<OfficerBase>();
+        if (hOfficerBase == null)
+            return false;
+
+        int nMoneyCost = hOfficerBase.Level * 10;
+
+        if (CGlobal_InventoryManager.Money < nMoneyCost)
+            return false;
+
+        return true;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     public static bool UpgradeCharacter(Transform hCharacter)
     {
         if (m_hInstance == null)
@@ -64,9 +95,28 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    bool MainUpgradeCharacter(Transform hCharacter)
+    public static bool UpgradeCharacter(Transform hCharacter,float fUpdamage,float fDecressAttackDelay)
     {
-        return false;
+        if (m_hInstance == null)
+            return false;
+
+        return Instance.MainUpgradeCharacter(hCharacter,fUpdamage,fDecressAttackDelay);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    bool MainUpgradeCharacter(Transform hCharacter, float fUpdamage = 1f, float fDecressAttackDelay = 0.1f)
+    {
+        // Maybe change.
+        if (!CheckCanUpgradeCharacter(hCharacter))
+            return false;
+
+        var hOfficerBase = hCharacter.GetComponent<OfficerBase>();
+
+        hOfficerBase.Upgrade(fUpdamage, fDecressAttackDelay);
+
+        return true;
     }
 
     #endregion

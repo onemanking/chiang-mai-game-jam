@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class Button_SkillController : MonoBehaviour
+public class Button_SkillController : MonoBehaviour,IPointerDownHandler
 {
     #region Variable
 
@@ -13,7 +14,12 @@ public class Button_SkillController : MonoBehaviour
     [SerializeField] int m_nSkillOfficerID;
     //[SerializeField] Slider m_hCooldownSlider;
 
-    [SerializeField] bool m_bShowNativeSideImage;
+    [SerializeField] bool m_bShowNativeSizeImage;
+
+    [SerializeField] bool m_bDisableClickWhenCooldown = true;
+
+    [SerializeField] private Image m_hImage;
+    [SerializeField] private Image m_hBackGround;
 
 #pragma warning restore 0649
     #endregion
@@ -21,8 +27,7 @@ public class Button_SkillController : MonoBehaviour
     public int SkillOfficerID { get { return m_nSkillOfficerID; } }
 
     Button m_hButton;
-    [SerializeField] private Image m_hImage;
-    [SerializeField] private Image m_hBackGround;
+    bool m_bCooldown;
 
     #endregion
 
@@ -56,10 +61,13 @@ public class Button_SkillController : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    public void ClickSkill()
+    public void OnPointerDown(PointerEventData eventData)
     {
+        if (m_bCooldown && m_bDisableClickWhenCooldown)
+            return;
+
         CGlobal_SkillManager.UseSkill(m_nSkillOfficerID);
-        m_hImage.color = new Color32(255,255,255,125);
+        m_hImage.color = new Color32(255, 255, 255, 125);
     }
 
     /// <summary>
@@ -67,12 +75,24 @@ public class Button_SkillController : MonoBehaviour
     /// </summary>
     void CooldownChange(float fValue)
     {
-        Debug.Log("cooldown " + fValue);
+        //Debug.Log("cooldown " + fValue);
         m_hBackGround.fillAmount = fValue;
         if(fValue >= 1f){
             m_hImage.color = new Color32(255,255,255,255);
         }
-           
+
+        if (fValue < 1)
+        {
+            m_bCooldown = true;
+            m_hImage.raycastTarget = false;
+            m_hBackGround.raycastTarget = false;
+        }
+        else
+        {
+            m_bCooldown = false;
+            m_hImage.raycastTarget = true;
+            m_hBackGround.raycastTarget = true;
+        }
     }
 
     #endregion
@@ -86,9 +106,11 @@ public class Button_SkillController : MonoBehaviour
     {
         m_hImage.sprite = hSprite;
 
-        if (m_bShowNativeSideImage)
+        if (m_bShowNativeSizeImage)
             m_hImage.SetNativeSize();
     }
+
+
 
     #endregion
 }
