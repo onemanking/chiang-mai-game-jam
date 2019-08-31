@@ -12,10 +12,13 @@ public class RadialMenuSpawner : MonoBehaviour
         Debug.Log("ins created");
     }
 
-    public void spawnMenu(Vector3 position){
+    public void spawnMenu(Transform owner){
         RadialMenu newMenu = Instantiate(menuPrefab) as RadialMenu;
         Debug.Log("Spawned");
         newMenu.transform.SetParent(transform,false);
-        newMenu.transform.position = position;
+        newMenu.transform.position = owner.position;
+
+        // Set click owner.
+        newMenu.owner = owner;
     }
 }

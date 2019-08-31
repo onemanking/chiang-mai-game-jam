@@ -29,6 +29,18 @@ public class CGlobal_InventoryManager : MonoBehaviour
         }
     }
 
+    public static int Money
+    {
+        get
+        {
+            if (m_hInstance == null)
+                return -1;
+
+            return m_hInstance.m_hInventoryData.m_nMoney;
+        }
+
+    }
+
     #endregion
 
     static CGlobal_InventoryManager m_hInstance;

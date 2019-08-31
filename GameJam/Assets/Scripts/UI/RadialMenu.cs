@@ -8,6 +8,9 @@ public class RadialMenu : MonoBehaviour
     private int angleCount = 8;
     public RadialButton selected;
     public RadialButton[] PrefabArray;
+
+    public Transform owner;
+
     public void Start()
     {
         for (int i = 0; i < PrefabArray.Length; i++)
