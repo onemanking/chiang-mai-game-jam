@@ -133,6 +133,12 @@ public sealed class CGlobal_SkillManager : MonoBehaviour
     /// </summary>
     void MainAddActionSpriteChange(int nOfficerID, UnityAction<Sprite> hAction)
     {
+        // Set current sprite
+        if (m_dicOfficerSkill.ContainsKey(nOfficerID) && m_dicOfficerSkill[nOfficerID].m_hSkill != null)
+        {
+            hAction?.Invoke(m_dicOfficerSkill[nOfficerID].m_hSkill.SkillSprite);
+        }
+
         if (m_dicActSpriteChange.ContainsKey(nOfficerID))
         {
             m_dicActSpriteChange[nOfficerID] += hAction;
@@ -141,13 +147,7 @@ public sealed class CGlobal_SkillManager : MonoBehaviour
         {
             m_dicActSpriteChange.Add(nOfficerID, hAction);
         }
-
-
-        // Set current sprite
-        if (m_dicOfficerSkill.ContainsKey(nOfficerID) && m_dicOfficerSkill[nOfficerID].m_hSkill != null)
-        {
-            m_dicActSpriteChange[nOfficerID]?.Invoke(m_dicOfficerSkill[nOfficerID].m_hSkill.SkillSprite);
-        }
+        
     }
 
     /// <summary>

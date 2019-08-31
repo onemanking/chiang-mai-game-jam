@@ -308,6 +308,8 @@ MonoBehaviour:
   m_AttackDelay: 1
   m_AttackRange: 5
   m_TargetTag: 1
+  head: {fileID: 0}
+  rotatableParts: []
 --- !u!136 &64020388
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2026,6 +2028,8 @@ MonoBehaviour:
   m_AttackDelay: 1
   m_AttackRange: 6
   m_TargetTag: 0
+  head: {fileID: 0}
+  rotatableParts: []
   m_Speed: 1
 --- !u!136 &1329229331
 CapsuleCollider:
@@ -2057,6 +2061,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 114
   m_CollisionDetection: 0
+--- !u!114 &1329229335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1329229329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9e3ce598641c5643b9fafcfb8c06707, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_nMoneyDrop: 10
 --- !u!1001 &1417756484
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2987,6 +3004,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2040340987}
+  - component: {fileID: 2040340988}
   m_Layer: 0
   m_Name: Cash
   m_TagString: Untagged
@@ -3010,3 +3028,15 @@ Transform:
   m_Father: {fileID: 175401368}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2040340988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2040340986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2e4470096581c040ac91b29434b15e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
