@@ -111,7 +111,7 @@ public class CGlobal_InventoryManager : MonoBehaviour
     /// </summary>
     void MainMoneyDown(int nMoney)
     {
-        if (nMoney > 0)
+        if (nMoney < 0)
             return;
 
         m_hInventoryData.m_nMoney -= nMoney;
