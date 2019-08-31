@@ -411,6 +411,7 @@ GameObject:
   - component: {fileID: 2036475247660602307}
   - component: {fileID: 2036475247660602308}
   - component: {fileID: 2036475247660602309}
+  - component: {fileID: -939716679585141598}
   m_Layer: 9
   m_Name: Prisoner_TEST
   m_TagString: Prisoner
@@ -507,3 +508,16 @@ MonoBehaviour:
   rotatableParts:
   - {fileID: 860849842995867008}
   m_Speed: 1
+--- !u!114 &-939716679585141598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8026239601494214446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9e3ce598641c5643b9fafcfb8c06707, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_nMoneyDrop: 10

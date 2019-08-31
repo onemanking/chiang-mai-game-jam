@@ -19,7 +19,6 @@ public class GameManager : MonoBehaviour
 			return _instance;
 		}
 	}
-	[UnityEngine.Serialization.FormerlySerializedAs("spawnPoint")]
 	[SerializeField] private Transform[] m_SpawnPoint;
 	[SerializeField] private PrisonerBase m_PrisonerPrefab;
 	[SerializeField] private float m_TotalHp;
@@ -65,6 +64,7 @@ public class GameManager : MonoBehaviour
 		return m_SpawnPoint[Random.Range(0, m_SpawnPoint.Length)].position;
 	}
 
+	#region WALL
 	public void WallTakeDamage(float _dmg)
 	{
 		m_TotalHp -= _dmg;
@@ -74,4 +74,5 @@ public class GameManager : MonoBehaviour
 			// GAME OVER
 		}
 	}
+	#endregion
 }

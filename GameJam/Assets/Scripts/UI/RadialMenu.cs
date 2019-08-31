@@ -32,11 +32,12 @@ public class RadialMenu : MonoBehaviour
             if(selected){
                 SelectedEvent();
             }
-           //Destroy(gameObject);
+           Destroy(gameObject);
         }
     }
 
     void SelectedEvent(){
         //Call upgrade police here
+        CGlobal_StatusManager.UpgradeCharacter(owner, 1, 0.1f);
     }
 }
