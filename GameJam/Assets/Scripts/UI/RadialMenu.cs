@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class RadialMenu : MonoBehaviour
 {
-    [SerializeField] float radius = 4.5f;
-    private int angleCount = 8;
+    private int angleCount = 9;
+    private float offsetAboveHead = 0.3f;
     public RadialButton selected;
     public RadialButton[] PrefabArray;
+    Camera m_MainCamera;
 
     public Transform owner;
 
     public void Start()
     {
+        m_MainCamera = Camera.main;
+        float rotationToCam = Quaternion.LookRotation(m_MainCamera.transform.position).y *60 ;
+        transform.rotation =  Quaternion.Euler(0, -rotationToCam, 0);
+
         for (int i = 0; i < PrefabArray.Length; i++)
         {
             RadialButton newButton =  Instantiate(PrefabArray[i]) as RadialButton;
@@ -20,7 +25,7 @@ public class RadialMenu : MonoBehaviour
             float theta = (2* Mathf.PI / angleCount) * (i-1);
             float xPos = Mathf.Sin(theta);
             float yPos = Mathf.Cos(theta);
-            newButton.transform.localPosition = new Vector3(xPos,yPos,0f) * radius;
+            newButton.transform.localPosition = new Vector3(xPos,yPos + offsetAboveHead ,0f) * 2f;
             newButton.myMenu = this;
         }
     }
