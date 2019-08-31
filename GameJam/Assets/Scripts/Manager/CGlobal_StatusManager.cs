@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public sealed class CGlobal_StatusManager : MonoBehaviour
 {
@@ -43,6 +44,9 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
     #region Variable - Inspector
 #pragma warning disable 0649
 
+    [Header("Temp")]
+    [SerializeField] UI_OfficerLevelController m_hPrefabUIOfficerLevel;
+
 #pragma warning restore 0649
     #endregion
 
@@ -68,6 +72,8 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
     DebuffAllSpeedData m_hDebuffAllSpeedData = new DebuffAllSpeedData();
 
     WaitForEndOfFrame m_wWaitEndFrame = new WaitForEndOfFrame();
+
+    Dictionary<Transform, UnityAction<int>> m_dicOnUpgradeCharacter = new Dictionary<Transform, UnityAction<int>>();
 
     #endregion
 
@@ -178,9 +184,70 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
         hOfficerBase.Upgrade(fUpdamage, fDecreadAttackDelay);
 
         RebuffAttackUpgradeCharacter(hCharacter);
-        
+
+        // Call action on upgrade
+        if (m_dicOnUpgradeCharacter.TryGetValue(hCharacter, out var hAction))
+            hAction?.Invoke(hOfficerBase.Level);
+
+        var hTemp = hCharacter.GetComponentInChildren<UI_OfficerLevelController>();
+        if (hTemp == null && m_hPrefabUIOfficerLevel != null)
+        {
+
+            var hUIController = Instantiate(m_hPrefabUIOfficerLevel, Vector3.zero, Quaternion.identity);
+            hUIController.Init(hCharacter,hOfficerBase.Level);
+        }
+
         return true;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public static void AddActionOnUpgradeThisCharacter(Transform hCharacter, UnityAction<int> hAction)
+    {
+        Instance?.MainAddActionOnUpgradeThisCharacter(hCharacter, hAction);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void MainAddActionOnUpgradeThisCharacter(Transform hCharacter,UnityAction<int> hAction)
+    {
+        if (m_dicOnUpgradeCharacter.ContainsKey(hCharacter))
+        {
+            m_dicOnUpgradeCharacter[hCharacter] += hAction;
+        }
+        else
+        {
+            m_dicOnUpgradeCharacter.Add(hCharacter, hAction);
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public static void RemoveActionOnUpgradeThisCharacter(Transform hCharacter,UnityAction<int> hAction)
+    {
+        if (m_hInstance == null)
+            return;
+
+        m_hInstance.MainRemoveActionOnUpgradeThisCharacter(hCharacter, hAction);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void MainRemoveActionOnUpgradeThisCharacter(Transform hCharacter, UnityAction<int> hAction)
+    {
+        if (hCharacter == null)
+            return;
+
+        if (!m_dicOnUpgradeCharacter.ContainsKey(hCharacter))
+            return;
+
+        m_dicOnUpgradeCharacter[hCharacter] -= hAction;
+    }
+
 
     /// <summary>
     /// 
