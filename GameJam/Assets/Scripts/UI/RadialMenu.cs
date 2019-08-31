@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RadialMenu : MonoBehaviour
 {
-    private int angleCount = 6;
+    private int angleCount = 8;
     public RadialButton selected;
     public RadialButton[] PrefabArray;
     public void Start()
@@ -16,7 +16,7 @@ public class RadialMenu : MonoBehaviour
             float theta = (2* Mathf.PI / angleCount) * (i-1);
             float xPos = Mathf.Sin(theta);
             float yPos = Mathf.Cos(theta);
-            newButton.transform.localPosition = new Vector3(xPos,yPos,0f) * 20f;
+            newButton.transform.localPosition = new Vector3(xPos,yPos,0f) * 4.5f;
             newButton.myMenu = this;
         }
     }
@@ -28,7 +28,7 @@ public class RadialMenu : MonoBehaviour
             if(selected){
                 Debug.Log(selected.name);
             }
-           Destroy(gameObject);
+           //Destroy(gameObject);
         }
     }
 }
