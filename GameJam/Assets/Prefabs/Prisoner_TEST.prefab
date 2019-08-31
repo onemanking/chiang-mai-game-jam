@@ -507,7 +507,7 @@ MonoBehaviour:
   head: {fileID: 860849842995867008}
   rotatableParts:
   - {fileID: 860849842995867008}
-  m_Speed: 1
+  m_Speed: 2
 --- !u!114 &-939716679585141598
 MonoBehaviour:
   m_ObjectHideFlags: 0
