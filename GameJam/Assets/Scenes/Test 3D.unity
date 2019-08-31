@@ -2671,6 +2671,7 @@ Transform:
   - {fileID: 1327371491}
   - {fileID: 1206904063}
   - {fileID: 949644788}
+  - {fileID: 1836832392}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2696,9 +2697,12 @@ MonoBehaviour:
   - {fileID: 522779221}
   m_PrisonerPrefab: {fileID: 2036475247660602309, guid: 697d5741ff7e36745ad7d02ec1d69f15,
     type: 3}
-  m_TotalHp:
+  m_WallHp:
     value: 100
   m_BossWaveEvery: 5
+  m_WallRenderer: {fileID: 2114417363}
+  m_FlashMat: {fileID: 2100000, guid: 4eeb6bf15a0dca544adf89fea6c769b9, type: 2}
+  m_ExplosionTransform: {fileID: 1836832392}
   m_HpBar: {fileID: 1123079709}
 --- !u!4 &1573700918 stripped
 Transform:
@@ -3203,6 +3207,36 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1123122284}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1836832391
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1836832392}
+  m_Layer: 0
+  m_Name: ExplosivePosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1836832392
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836832391}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.52, y: 0, z: 8.88}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1540601737}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1905934106
 GameObject:
   m_ObjectHideFlags: 0
@@ -3851,9 +3885,15 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 92126790ed10305438e5ada8343f07eb, type: 2}
+      objectReference: {fileID: 2100000, guid: a077e6bd01d0312458204795fdf729cf, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7cef9cf9d56dd694f8c7f84a305e1dc5, type: 3}
+--- !u!23 &2114417363 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -1504981713932161579, guid: 7cef9cf9d56dd694f8c7f84a305e1dc5,
+    type: 3}
+  m_PrefabInstance: {fileID: 2114417362}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2121564013
 GameObject:
   m_ObjectHideFlags: 0

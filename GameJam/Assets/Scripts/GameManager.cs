@@ -21,6 +21,17 @@ public class GameManager : MonoBehaviour
 			return _instance;
 		}
 	}
+
+	private enum GameState
+	{
+		None,
+		Playing,
+		Pause,
+		Over
+	}
+
+	private GameState gameState;
+
 	[SerializeField] private Transform[] m_SpawnPoint;
 	[SerializeField] private PrisonerBase m_PrisonerPrefab;
 	[SerializeField] private FloatReactiveProperty m_WallHp = new FloatReactiveProperty(100f);
@@ -29,6 +40,7 @@ public class GameManager : MonoBehaviour
 	[Header("Wall")]
 	[SerializeField] private Renderer m_WallRenderer;
 	[SerializeField] private Material m_FlashMat;
+	[SerializeField] private Transform m_ExplosionTransform;
 
 	[Header("UI")]
 	[SerializeField] private Image m_HpBar;
@@ -56,7 +68,6 @@ public class GameManager : MonoBehaviour
 			m_HpBar.fillAmount = m_WallHp.Value / 100;
 			if (x <= 0)
 			{
-				// GAME OVER
 				GameOver();
 			}
 		}).AddTo(this);
@@ -64,20 +75,24 @@ public class GameManager : MonoBehaviour
 
 	private void GameOver()
 	{
-		var officers = GameObject.FindObjectsOfType<OfficerBase>();
-
-		foreach (var officer in officers)
+		gameState = GameState.Over;
+		var characters = GameObject.FindObjectsOfType<CharacterBase>();
+		foreach (var character in characters)
 		{
-			officer.enabled = false;
-			var rb = officer.GetComponent<Rigidbody>();
-			rb.constraints = RigidbodyConstraints.None;
-			rb.AddExplosionForce(500, rb.position, 500, 50, ForceMode.Force);
+			character.enabled = false;
+			if (character.GetType() == typeof(OfficerBase))
+			{
+				var rb = character.GetComponent<Rigidbody>();
+				rb.constraints = RigidbodyConstraints.None;
+				rb.AddExplosionForce(500, m_ExplosionTransform.position, 200, 50, ForceMode.Force);
+			}
 		}
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
+		if (gameState == GameState.Over) return;
 		if (Time.time >= spawnTimer)
 		{
 			spawnTimer = Time.time + 2;
