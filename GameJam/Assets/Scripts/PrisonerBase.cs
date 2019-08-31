@@ -54,4 +54,21 @@ public class PrisonerBase : CharacterBase
 			return false;
 		}
 	}
+
+	public void Init(float _speed, float _dmg, float _atkDelay)
+	{
+		m_Speed = _speed;
+		m_Damage = _dmg;
+		m_AttackDelay = _dmg;
+	}
+
+	public void SetSpeed(float _speed)
+	{
+		m_Speed = _speed;
+	}
+
+    public float GetSpeed()
+    {
+        return m_Speed;
+    }
 }

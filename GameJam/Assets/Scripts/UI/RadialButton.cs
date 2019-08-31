@@ -5,6 +5,10 @@ using UnityEngine.EventSystems;
 public class RadialButton : MonoBehaviour , IPointerEnterHandler , IPointerExitHandler
 {
     public RadialMenu myMenu;
+
+    [Header("Event Add On")]
+    public UI_BaseEventAddOn[] m_arrEventAddOn;
+    
     private void Awake() {
     }
      public void OnPointerEnter(PointerEventData pointerEventData)
@@ -27,4 +31,22 @@ public class RadialButton : MonoBehaviour , IPointerEnterHandler , IPointerExitH
     {
         
     }
+
+    #region Event Run
+
+    /// <summary>
+    /// Run all event add on in this button.
+    /// </summary>
+    public void RunEventAddOn(Transform owner)
+    {
+        if (m_arrEventAddOn == null || m_arrEventAddOn.Length <= 0)
+            return;
+
+        for(int i = 0; i < m_arrEventAddOn.Length; i++)
+        {
+            m_arrEventAddOn[i]?.Run(owner);
+        }
+    }
+
+    #endregion
 }

@@ -14,6 +14,7 @@ public class Button_SkillController : MonoBehaviour,IPointerDownHandler
     [SerializeField] int m_nSkillOfficerID;
     //[SerializeField] Slider m_hCooldownSlider;
 
+    [SerializeField] bool m_bOverrideImageBySkillData;
     [SerializeField] bool m_bShowNativeSizeImage;
 
     [SerializeField] bool m_bDisableClickWhenCooldown = true;
@@ -42,14 +43,14 @@ public class Button_SkillController : MonoBehaviour,IPointerDownHandler
 
     private void OnEnable()
     {
-        //CGlobal_SkillManager.AddActionSpriteChange(m_nSkillOfficerID, SpriteChange);
+        CGlobal_SkillManager.AddActionSpriteChange(m_nSkillOfficerID, SpriteChange);
 
         CGlobal_SkillManager.AddActionCooldownChange(m_nSkillOfficerID, CooldownChange);
     }
 
     private void OnDisable()
     {
-        //CGlobal_SkillManager.RemoveActionSpriteChange(m_nSkillOfficerID, SpriteChange);
+        CGlobal_SkillManager.RemoveActionSpriteChange(m_nSkillOfficerID, SpriteChange);
 
         CGlobal_SkillManager.RemoveActionCooldownChange(m_nSkillOfficerID, CooldownChange);
     }
@@ -104,6 +105,9 @@ public class Button_SkillController : MonoBehaviour,IPointerDownHandler
     /// </summary>
     void SpriteChange(Sprite hSprite)
     {
+        if (!m_bOverrideImageBySkillData)
+            return;
+
         m_hImage.sprite = hSprite;
 
         if (m_bShowNativeSizeImage)

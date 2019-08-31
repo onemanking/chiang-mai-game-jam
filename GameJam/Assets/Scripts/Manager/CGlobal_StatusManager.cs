@@ -4,6 +4,24 @@ using UnityEngine;
 
 public sealed class CGlobal_StatusManager : MonoBehaviour
 {
+    #region Struct
+
+    struct DebuffSpeedCharacterData
+    {
+        public PrisonerBase m_hBase;
+        public float m_fOriginalSpeed;
+    }
+
+    struct DebuffAllSpeedData
+    {
+        public List<DebuffSpeedCharacterData> m_lstCharacterData;
+        public bool m_bDebuffing;
+        public float m_fDebuffMultiplier;
+        public float m_fDebuffDuration;
+    }
+
+    #endregion
+
     #region Variable
 
     #region Variable - Inspector
@@ -29,6 +47,10 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
 
     static CGlobal_StatusManager m_hInstance;
 
+    DebuffAllSpeedData m_hDebuffAllSpeedData = new DebuffAllSpeedData();
+
+    WaitForEndOfFrame m_wWaitEndFrame = new WaitForEndOfFrame();
+
     #endregion
 
     #region Base - Mono
@@ -44,6 +66,21 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
             Destroy(this);
             return;
         }
+    }
+
+    private void OnEnable()
+    {
+        CGlobal_CharacterManager.AddActionOnCharacterSpawn(OnCharacterSpawn);
+    }
+
+    private void OnDisable()
+    {
+        CGlobal_CharacterManager.RemoveActionOnCharacterSpawn(OnCharacterSpawn);
+    }
+
+    private void Update()
+    {
+        DebuffSpeedUpdate();  
     }
 
     #endregion
@@ -72,11 +109,14 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
         var hOfficerBase = hCharacter.GetComponent<OfficerBase>();
         if (hOfficerBase == null)
             return false;
-
-        int nMoneyCost = hOfficerBase.Level * 10;
+        
+        int nMoneyCost = GetUpgrageCost(hOfficerBase.Level);
 
         if (CGlobal_InventoryManager.Money < nMoneyCost)
+        {
+            Debug.Log("Don't have enough money to upgrade this character.");
             return false;
+        }
 
         return true;
     }
@@ -95,18 +135,18 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    public static bool UpgradeCharacter(Transform hCharacter,float fUpdamage,float fDecressAttackDelay)
+    public static bool UpgradeCharacter(Transform hCharacter,float fUpdamage,float fDecreadAttackDelay0)
     {
         if (m_hInstance == null)
             return false;
 
-        return Instance.MainUpgradeCharacter(hCharacter,fUpdamage,fDecressAttackDelay);
+        return Instance.MainUpgradeCharacter(hCharacter,fUpdamage,fDecreadAttackDelay0);
     }
 
     /// <summary>
     /// 
     /// </summary>
-    bool MainUpgradeCharacter(Transform hCharacter, float fUpdamage = 1f, float fDecressAttackDelay = 0.1f)
+    bool MainUpgradeCharacter(Transform hCharacter, float fUpdamage = 1f, float fDecreadAttackDelay = 0.1f)
     {
         // Maybe change.
         if (!CheckCanUpgradeCharacter(hCharacter))
@@ -114,9 +154,85 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
 
         var hOfficerBase = hCharacter.GetComponent<OfficerBase>();
 
-        hOfficerBase.Upgrade(fUpdamage, fDecressAttackDelay);
+        CGlobal_InventoryManager.MoneyDown(GetUpgrageCost(hOfficerBase.Level));
 
+        hOfficerBase.Upgrade(fUpdamage, fDecreadAttackDelay);
+        
         return true;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public static void DebuffAllPrisonerSpeed(float fDebuffSpeedMultiplier,float fDebuffDuration)
+    {
+        Instance?.MainDebuffAllPrisonerSpeed(fDebuffSpeedMultiplier, fDebuffDuration);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void MainDebuffAllPrisonerSpeed(float fDebuffSpeedMultiplier, float fDebuffDuration)
+    {
+        var arrPrisoner = GameObject.FindGameObjectsWithTag(TagType.Prisoner.String());
+
+        if (arrPrisoner == null || arrPrisoner.Length <= 0)
+            return;
+
+        ResetDebuffSpeedToOriginal();
+
+        m_hDebuffAllSpeedData.m_bDebuffing = true;
+        m_hDebuffAllSpeedData.m_fDebuffMultiplier = fDebuffSpeedMultiplier;
+        m_hDebuffAllSpeedData.m_fDebuffDuration = fDebuffDuration;
+
+        for(int i = 0; i < arrPrisoner.Length; i++)
+        {
+            var hPrisonerBase = arrPrisoner[i].GetComponent<PrisonerBase>();
+
+            if (hPrisonerBase == null)
+                continue;
+
+            if (m_hDebuffAllSpeedData.m_lstCharacterData == null)
+                m_hDebuffAllSpeedData.m_lstCharacterData = new List<DebuffSpeedCharacterData>();
+
+            m_hDebuffAllSpeedData.m_lstCharacterData.Add(new DebuffSpeedCharacterData
+            {
+                m_hBase = hPrisonerBase,
+                m_fOriginalSpeed = hPrisonerBase.GetSpeed(),
+            });
+
+            hPrisonerBase.SetSpeed(hPrisonerBase.GetSpeed() * fDebuffSpeedMultiplier);
+        }
+    }
+
+    #endregion
+
+    #region Update
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void DebuffSpeedUpdate()
+    {
+        if (!m_hDebuffAllSpeedData.m_bDebuffing)
+            return;
+
+        m_hDebuffAllSpeedData.m_fDebuffDuration -= Time.deltaTime;
+
+        if (m_hDebuffAllSpeedData.m_fDebuffDuration <= 0)
+            ResetDebuffSpeedToOriginal();
+    }
+
+    #endregion
+
+    #region Action
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void OnCharacterSpawn(Transform hCharacter)
+    {
+        StartCoroutine(WaitBeforeCheckDebuffSpeed(hCharacter));
     }
 
     #endregion
@@ -131,6 +247,68 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
         var hGO = new GameObject();
         hGO.AddComponent<CGlobal_StatusManager>();
         hGO.name = "Status Manager";
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    int GetUpgrageCost(int nLevel)
+    {
+        return nLevel * 10;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void ResetDebuffSpeedToOriginal()
+    {
+        if (m_hDebuffAllSpeedData.m_lstCharacterData == null || m_hDebuffAllSpeedData.m_lstCharacterData.Count <= 0)
+            return;
+
+        for(int i = 0; i < m_hDebuffAllSpeedData.m_lstCharacterData.Count; i++)
+        {
+            // Reset to original speed.
+            m_hDebuffAllSpeedData.m_lstCharacterData[i].m_hBase?.SetSpeed(m_hDebuffAllSpeedData.m_lstCharacterData[i].m_fOriginalSpeed);
+        }
+
+        m_hDebuffAllSpeedData.m_bDebuffing = false;
+        m_hDebuffAllSpeedData.m_lstCharacterData.Clear();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    IEnumerator WaitBeforeCheckDebuffSpeed(Transform hCharacter)
+    {
+        yield return m_wWaitEndFrame;
+
+        CheckDebuffSpeedOnCharacterSpawn(hCharacter);
+    }
+
+    /// <summary>
+    /// Check for debuff prisoner that spawn during debuff reduce speed.
+    /// </summary>
+    void CheckDebuffSpeedOnCharacterSpawn(Transform hCharacter)
+    {
+        // If not during debuff. Skip it.
+        if (!m_hDebuffAllSpeedData.m_bDebuffing)
+            return;
+
+        if (hCharacter == null || !hCharacter.CompareTag(TagType.Prisoner.String()))
+            return;
+
+        var hPrisonerBase = hCharacter.GetComponent<PrisonerBase>();
+        if (hPrisonerBase == null)
+            return;
+
+        m_hDebuffAllSpeedData.m_lstCharacterData.Add(new DebuffSpeedCharacterData
+        {
+
+            m_hBase = hPrisonerBase,
+            m_fOriginalSpeed = hPrisonerBase.GetSpeed()
+        });
+
+        hPrisonerBase.SetSpeed(hPrisonerBase.GetSpeed() * m_hDebuffAllSpeedData.m_fDebuffMultiplier);        
     }
 
     #endregion

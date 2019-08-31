@@ -37,7 +37,19 @@ public abstract class CharacterBase : MonoBehaviour
 		layerMask = ~layerMask;
 	}
 
-	protected virtual void Update()
+    protected virtual void OnEnable()
+    {
+        // Register character.
+        CGlobal_CharacterManager.RegisterCharacter(transform);
+    }
+
+    protected virtual void OnDisable()
+    {
+        // Unregister character.
+        CGlobal_CharacterManager.UnregisterCharacter(transform);
+    }
+
+    protected virtual void Update()
 	{
 		if (IsCanAttack(m_TargetTag, out currentTarget)) AttakeCurrentTarget();
 		else ResetLooking();
