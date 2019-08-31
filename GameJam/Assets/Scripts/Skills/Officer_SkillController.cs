@@ -23,7 +23,7 @@ public class Officer_SkillController : MonoBehaviour
 
     private void Awake()
     {
-        CGlobal_SkillManager.RegisterOfficerCharacterSkill(m_nOfficerID, m_hSkill);
+        CGlobal_SkillManager.RegisterOfficerCharacterSkill(transform,m_nOfficerID, m_hSkill);
     }
 
     #endregion

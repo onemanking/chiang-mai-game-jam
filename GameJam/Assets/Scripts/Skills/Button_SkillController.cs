@@ -19,6 +19,7 @@ public class Button_SkillController : MonoBehaviour
     public int SkillOfficerID { get { return m_nSkillOfficerID; } }
 
     Button m_hButton;
+    Image m_hImage;
 
     #endregion
 
@@ -27,8 +28,19 @@ public class Button_SkillController : MonoBehaviour
     private void Awake()
     {
         m_hButton = GetComponent<Button>();
+        m_hImage = GetComponent<Image>();
 
         CGlobal_SkillManager.RegisterButtonSkill(this);
+    }
+
+    private void OnEnable()
+    {
+        CGlobal_SkillManager.AddActionSpriteChange(m_nSkillOfficerID, SpriteChange);
+    }
+
+    private void OnDisable()
+    {
+        CGlobal_SkillManager.RemoveActionSpriteChange(m_nSkillOfficerID, SpriteChange);
     }
 
     #endregion
@@ -58,6 +70,18 @@ public class Button_SkillController : MonoBehaviour
             m_hButton.interactable = false;
         else
             m_hButton.interactable = true;
+    }
+
+    #endregion
+
+    #region Action
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void SpriteChange(Sprite hSprite)
+    {
+        m_hImage.sprite = hSprite;
     }
 
     #endregion
