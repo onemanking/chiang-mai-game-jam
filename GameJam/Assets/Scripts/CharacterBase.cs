@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +21,7 @@ public abstract class CharacterBase : MonoBehaviour
 	[Header("Animation")]
 	[SerializeField] protected Transform head;
 	[SerializeField] protected Transform[] rotatableParts;
+	[SerializeField] private ParticleSystem m_particle;
 
 	protected Rigidbody rigid;
 	protected Collider coll;
@@ -84,6 +85,7 @@ public abstract class CharacterBase : MonoBehaviour
 	public virtual void TakeDamage(float _dmg)
 	{
 		m_Hp -= _dmg;
+		Instantiate(m_particle, head.position, Quaternion.identity);
 		if (m_Hp <= 0) Dead();
 	}
 

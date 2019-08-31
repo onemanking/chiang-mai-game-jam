@@ -57,10 +57,22 @@ public class GameManager : MonoBehaviour
 			if (x <= 0)
 			{
 				// GAME OVER
-				// Application.Quit();
-				Debug.LogWarning("GameOver");
+				GameOver();
 			}
 		}).AddTo(this);
+	}
+
+	private void GameOver()
+	{
+		var officers = GameObject.FindObjectsOfType<OfficerBase>();
+
+		foreach (var officer in officers)
+		{
+			officer.enabled = false;
+			var rb = officer.GetComponent<Rigidbody>();
+			rb.constraints = RigidbodyConstraints.None;
+			rb.AddExplosionForce(500, rb.transform.position, 200, 50, ForceMode.Force);
+		}
 	}
 
 	// Update is called once per frame
@@ -90,7 +102,16 @@ public class GameManager : MonoBehaviour
 	public void WallTakeDamage(float _dmg)
 	{
 		m_WallHp.Value -= _dmg;
-		// m_WallRenderer.material = m_FlashMat;
+		StopCoroutine(FlashWall());
+		StartCoroutine(FlashWall());
+	}
+
+	private IEnumerator FlashWall()
+	{
+		var mat = m_WallRenderer.material;
+		m_WallRenderer.material = m_FlashMat;
+		yield return new WaitForSeconds(0.05f);
+		m_WallRenderer.material = mat;
 	}
 	#endregion
 }
