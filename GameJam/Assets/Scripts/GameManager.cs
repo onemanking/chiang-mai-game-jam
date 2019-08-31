@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,8 +23,11 @@ public class GameManager : MonoBehaviour
 	}
 	[SerializeField] private Transform[] m_SpawnPoint;
 	[SerializeField] private PrisonerBase m_PrisonerPrefab;
-	[SerializeField] private float m_TotalHp;
+	[SerializeField] private FloatReactiveProperty m_TotalHp;
 	[SerializeField] private int m_BossWaveEvery;
+
+	[Header("UI")]
+	[SerializeField] private Image m_HpBar;
 
 	private float spawnTimer;
 
@@ -41,7 +46,7 @@ public class GameManager : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-
+		m_TotalHp.Subscribe(x => m_HpBar.fillAmount = m_TotalHp.Value / 100).AddTo(this);
 	}
 
 	// Update is called once per frame
@@ -54,10 +59,13 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	#region SPAWN
 	private void SpawnPrisoner()
 	{
-		Instantiate(m_PrisonerPrefab, RandomPoint(), Quaternion.identity);
+		var prisoner = Instantiate(m_PrisonerPrefab, RandomPoint(), Quaternion.identity);
+		prisoner.Init(_speed: 2, _dmg: 10, _atkDelay: 1);
 	}
+	#endregion
 
 	private Vector3 RandomPoint()
 	{
@@ -67,9 +75,10 @@ public class GameManager : MonoBehaviour
 	#region WALL
 	public void WallTakeDamage(float _dmg)
 	{
-		m_TotalHp -= _dmg;
+		m_TotalHp.Value -= _dmg;
+
 		// TODO
-		if (m_TotalHp <= 0)
+		if (m_TotalHp.Value <= 0)
 		{
 			// GAME OVER
 			Debug.LogWarning("GameOver");
