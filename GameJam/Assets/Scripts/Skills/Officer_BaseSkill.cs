@@ -18,6 +18,9 @@ public abstract class Officer_BaseSkill : abst_Skill
     [Header("Cooldown")]
     [SerializeField] protected float m_fCooldown;
 
+    [Header("Status")]
+    [SerializeField] protected abst_Data_CharacterStatus m_hStatusData;
+
 #pragma warning restore 0649
     #endregion
 
@@ -26,6 +29,8 @@ public abstract class Officer_BaseSkill : abst_Skill
     public override Sprite SkillCutsceneSprite { get { return m_hCutsceneSprite; } }
 
     public override float CooldownTime { get { return m_fCooldown; } }
+
+    public override abst_Data_CharacterStatus StatusData { get { return m_hStatusData; } }
 
 
     #endregion
