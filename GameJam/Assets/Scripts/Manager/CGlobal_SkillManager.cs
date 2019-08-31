@@ -7,6 +7,7 @@ using UnityEngine.Events;
 
 public abstract class abst_Skill : ScriptableObject
 {
+    public abstract string SkillName { get; }
     public abstract Sprite SkillSprite { get; }
 
     public abstract Sprite SkillCutsceneSprite { get; }

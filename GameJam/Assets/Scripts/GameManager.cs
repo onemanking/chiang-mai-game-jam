@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
 			officer.enabled = false;
 			var rb = officer.GetComponent<Rigidbody>();
 			rb.constraints = RigidbodyConstraints.None;
-			rb.AddExplosionForce(500, rb.transform.position, 200, 50, ForceMode.Force);
+			rb.AddExplosionForce(500, rb.position, 500, 50, ForceMode.Force);
 		}
 	}
 

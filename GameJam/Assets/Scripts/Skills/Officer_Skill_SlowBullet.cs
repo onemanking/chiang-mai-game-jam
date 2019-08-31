@@ -8,6 +8,7 @@ public class Officer_Skill_SlowBullet : Officer_BaseSkill
     #region Variable - Inspector
 #pragma warning disable 0649
 
+    [Header("Debuff")]
     [SerializeField] float m_fDebuffSpeedMultiplier = 0.3f;
     [SerializeField] float m_fDebuffSpeedDuration = 5f;
 
