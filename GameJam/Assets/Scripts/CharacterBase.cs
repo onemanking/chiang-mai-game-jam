@@ -2,12 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody)), RequireComponent(typeof(CapsuleCollider))]
 public abstract class CharacterBase : MonoBehaviour
 {
+	protected enum TargetTag
+	{
+		Officer,
+		Prisoner
+	}
+
 	[SerializeField] protected float m_Hp;
 	[SerializeField] protected float m_Damage;
 	[SerializeField] protected float m_AttackDelay;
-	[SerializeField] protected string m_TargetTag;
+	[SerializeField] protected float m_AttackRange;
+	[SerializeField] protected TargetTag m_TargetTag;
+
+	protected Rigidbody rigid;
 
 	protected CharacterBase currentTarget;
 	private float attackTimer;
@@ -15,7 +25,7 @@ public abstract class CharacterBase : MonoBehaviour
 	// Start is called before the first frame update
 	void Awake()
 	{
-
+		rigid = GetComponent<Rigidbody>();
 	}
 
 	protected virtual void Update()
@@ -44,5 +54,5 @@ public abstract class CharacterBase : MonoBehaviour
 		Destroy(gameObject);
 	}
 
-	protected abstract bool IsCanAttack(string _tag, out CharacterBase _target);
+	protected abstract bool IsCanAttack(TargetTag _tag, out CharacterBase _target);
 }

@@ -18,20 +18,20 @@ public class PrisonerBase : CharacterBase
 
 	protected virtual void Move()
 	{
-		transform.position = Vector2.Lerp(transform.position, transform.TileUp(), Time.deltaTime * m_Speed);
+		rigid.velocity = transform.forward * m_Speed;
 	}
 
-	protected override bool IsCanAttack(string _tag, out CharacterBase _target)
+	protected override bool IsCanAttack(TargetTag _tag, out CharacterBase _target)
 	{
-		Debug.DrawLine(transform.position, transform.TileUp());
-		var hits = Physics2D.LinecastAll(transform.position, transform.TileUp());
+		Debug.DrawRay(transform.position, transform.forward + transform.up * m_AttackRange);
+		var hits = Physics.RaycastAll(transform.position, transform.forward + transform.up, m_AttackRange);
 		foreach (var hit in hits)
 		{
 			if (hit.collider)
 			{
 				if (hit.collider.gameObject != gameObject)
 				{
-					_target = hit.collider.CompareTag(_tag) ? hit.collider.GetComponent<CharacterBase>() : null;
+					_target = hit.collider.CompareTag(_tag.ToString()) ? hit.collider.GetComponent<CharacterBase>() : null;
 					return _target != null;
 				}
 				else

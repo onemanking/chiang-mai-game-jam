@@ -4,19 +4,17 @@ using UnityEngine;
 
 public class OfficerBase : CharacterBase
 {
-	[SerializeField] protected int attackRange;
-
-	protected override bool IsCanAttack(string _tag, out CharacterBase _target)
+	protected override bool IsCanAttack(TargetTag _tag, out CharacterBase _target)
 	{
-		Debug.DrawLine(transform.position, transform.TileDown(attackRange));
-		var hits = Physics2D.LinecastAll(transform.position, transform.TileDown(attackRange));
+		Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * m_AttackRange);
+		var hits = Physics.RaycastAll(transform.position, transform.TransformDirection(Vector3.forward), m_AttackRange);
 		foreach (var hit in hits)
 		{
 			if (hit.collider)
 			{
 				if (hit.collider.gameObject != gameObject)
 				{
-					_target = hit.collider.CompareTag(_tag) ? hit.collider.GetComponent<CharacterBase>() : null;
+					_target = hit.collider.CompareTag(_tag.ToString()) ? hit.collider.GetComponent<CharacterBase>() : null;
 					return _target != null;
 				}
 				else
