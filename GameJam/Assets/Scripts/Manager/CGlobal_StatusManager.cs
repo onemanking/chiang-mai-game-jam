@@ -72,11 +72,14 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
         var hOfficerBase = hCharacter.GetComponent<OfficerBase>();
         if (hOfficerBase == null)
             return false;
-
-        int nMoneyCost = hOfficerBase.Level * 10;
+        
+        int nMoneyCost = GetUpgrageCost(hOfficerBase.Level);
 
         if (CGlobal_InventoryManager.Money < nMoneyCost)
+        {
+            Debug.Log("Don't have enough money to upgrade this character.");
             return false;
+        }
 
         return true;
     }
@@ -114,8 +117,10 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
 
         var hOfficerBase = hCharacter.GetComponent<OfficerBase>();
 
-        hOfficerBase.Upgrade(fUpdamage, fDecressAttackDelay);
+        CGlobal_InventoryManager.MoneyDown(GetUpgrageCost(hOfficerBase.Level));
 
+        hOfficerBase.Upgrade(fUpdamage, fDecressAttackDelay);
+        
         return true;
     }
 
@@ -131,6 +136,14 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
         var hGO = new GameObject();
         hGO.AddComponent<CGlobal_StatusManager>();
         hGO.name = "Status Manager";
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    int GetUpgrageCost(int nLevel)
+    {
+        return nLevel * 10;
     }
 
     #endregion
