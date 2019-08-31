@@ -72,6 +72,7 @@ public class GameManager : MonoBehaviour
 		if (m_TotalHp <= 0)
 		{
 			// GAME OVER
+			Debug.LogWarning("GameOver");
 		}
 	}
 	#endregion

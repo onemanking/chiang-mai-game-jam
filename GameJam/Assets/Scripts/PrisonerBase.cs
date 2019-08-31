@@ -54,4 +54,9 @@ public class PrisonerBase : CharacterBase
 			return false;
 		}
 	}
+
+	public void SetSpeed(float _speed)
+	{
+		m_Speed = _speed;
+	}
 }
