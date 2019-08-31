@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Officer
   - Prisoner
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -15,10 +16,10 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Officer
+  - Prisoner
+  - Map
+  - Wall
   - 
   - 
   - 

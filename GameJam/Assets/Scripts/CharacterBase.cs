@@ -24,6 +24,7 @@ public abstract class CharacterBase : MonoBehaviour
 
 	protected Rigidbody rigid;
 	protected Collider coll;
+	protected int layerMask;
 	protected CharacterBase currentTarget;
 	private float attackTimer;
 
@@ -32,11 +33,14 @@ public abstract class CharacterBase : MonoBehaviour
 	{
 		rigid = GetComponent<Rigidbody>();
 		coll = GetComponent<Collider>();
+		layerMask = 1 << gameObject.layer;
+		layerMask = ~layerMask;
 	}
 
 	protected virtual void Update()
 	{
 		if (IsCanAttack(m_TargetTag, out currentTarget)) AttakeCurrentTarget();
+		else ResetLooking();
 	}
 
 	protected virtual void AttakeCurrentTarget()
@@ -46,11 +50,18 @@ public abstract class CharacterBase : MonoBehaviour
 		{
 			attackTimer = Time.time + m_AttackDelay;
 			currentTarget.TakeDamage(m_Damage);
-			Debug.LogError($"attack to {currentTarget.gameObject.name}");
 		}
 	}
 
-	private void LookingToTarget()
+	private void ResetLooking()
+	{
+		foreach (var tr in rotatableParts)
+		{
+			tr.rotation = Quaternion.Lerp(tr.rotation, Quaternion.Euler(0, 180, 0), Time.deltaTime * 2f);
+		}
+	}
+
+	protected virtual void LookingToTarget()
 	{
 		foreach (var tr in rotatableParts)
 		{
@@ -58,7 +69,7 @@ public abstract class CharacterBase : MonoBehaviour
 		}
 	}
 
-	protected virtual void TakeDamage(float _dmg)
+	public virtual void TakeDamage(float _dmg)
 	{
 		m_Hp -= _dmg;
 		if (m_Hp <= 0) Dead();
@@ -70,4 +81,10 @@ public abstract class CharacterBase : MonoBehaviour
 	}
 
 	protected abstract bool IsCanAttack(TargetTag _tag, out CharacterBase _target);
+
+	private void OnDrawGizmos()
+	{
+		if (coll)
+			Gizmos.DrawWireCube(transform.position, new Vector3(coll.bounds.extents.x, coll.bounds.extents.y * 10, coll.bounds.size.z * 2 * m_AttackRange));
+	}
 }
