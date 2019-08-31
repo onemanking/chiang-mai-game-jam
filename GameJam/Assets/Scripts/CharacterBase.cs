@@ -18,7 +18,7 @@ public abstract class CharacterBase : MonoBehaviour
 	[SerializeField] protected TargetTag m_TargetTag;
 
 	protected Rigidbody rigid;
-
+	protected Collider coll;
 	protected CharacterBase currentTarget;
 	private float attackTimer;
 
@@ -26,6 +26,7 @@ public abstract class CharacterBase : MonoBehaviour
 	void Awake()
 	{
 		rigid = GetComponent<Rigidbody>();
+		coll = GetComponent<Collider>();
 	}
 
 	protected virtual void Update()

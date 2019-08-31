@@ -1473,7 +1473,7 @@ MonoBehaviour:
   m_Hp: 100
   m_Damage: 10
   m_AttackDelay: 1
-  m_AttackRange: 6
+  m_AttackRange: 1
   m_TargetTag: 0
   m_Speed: 1
 --- !u!136 &1329229331
