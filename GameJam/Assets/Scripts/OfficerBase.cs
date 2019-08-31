@@ -6,8 +6,7 @@ public class OfficerBase : CharacterBase
 {
 	protected override bool IsCanAttack(TargetTag _tag, out CharacterBase _target)
 	{
-		Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * m_AttackRange);
-		var hits = Physics.RaycastAll(transform.position, transform.TransformDirection(Vector3.forward), m_AttackRange);
+		var hits = Physics.BoxCastAll(transform.position, new Vector2(coll.bounds.extents.x, coll.bounds.extents.y * 10), transform.forward, Quaternion.LookRotation(transform.forward), m_AttackRange);
 		foreach (var hit in hits)
 		{
 			if (hit.collider)
@@ -30,5 +29,11 @@ public class OfficerBase : CharacterBase
 
 		_target = null;
 		return false;
+	}
+
+	private void OnDrawGizmos()
+	{
+		if (coll)
+			Gizmos.DrawWireCube(transform.position, new Vector3(coll.bounds.extents.x, coll.bounds.extents.y * 10, coll.bounds.size.z * m_AttackRange));
 	}
 }
