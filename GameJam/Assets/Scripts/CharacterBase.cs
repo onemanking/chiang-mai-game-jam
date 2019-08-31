@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,6 +17,10 @@ public abstract class CharacterBase : MonoBehaviour
 	[SerializeField] protected float m_AttackDelay;
 	[SerializeField] protected float m_AttackRange;
 	[SerializeField] protected TargetTag m_TargetTag;
+
+	[Header("Animation")]
+	[SerializeField] protected Transform head;
+	[SerializeField] protected Transform[] rotatableParts;
 
 	protected Rigidbody rigid;
 	protected Collider coll;
@@ -36,11 +41,20 @@ public abstract class CharacterBase : MonoBehaviour
 
 	protected virtual void AttakeCurrentTarget()
 	{
+		LookingToTarget();
 		if (Time.time >= attackTimer)
 		{
 			attackTimer = Time.time + m_AttackDelay;
 			currentTarget.TakeDamage(m_Damage);
 			Debug.LogError($"attack to {currentTarget.gameObject.name}");
+		}
+	}
+
+	private void LookingToTarget()
+	{
+		foreach (var tr in rotatableParts)
+		{
+			tr.LookAt(currentTarget.head);
 		}
 	}
 
