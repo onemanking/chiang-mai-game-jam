@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RadialMenu : MonoBehaviour
 {
+    [SerializeField] float radius = 4.5f;
     private int angleCount = 8;
     public RadialButton selected;
     public RadialButton[] PrefabArray;
@@ -16,7 +17,7 @@ public class RadialMenu : MonoBehaviour
             float theta = (2* Mathf.PI / angleCount) * (i-1);
             float xPos = Mathf.Sin(theta);
             float yPos = Mathf.Cos(theta);
-            newButton.transform.localPosition = new Vector3(xPos,yPos,0f) * 4.5f;
+            newButton.transform.localPosition = new Vector3(xPos,yPos,0f) * radius;
             newButton.myMenu = this;
         }
     }
@@ -26,9 +27,13 @@ public class RadialMenu : MonoBehaviour
     {
         if(Input.GetMouseButtonUp(0)){
             if(selected){
-                Debug.Log(selected.name);
+                SelectedEvent();
             }
-           Destroy(gameObject);
+           //Destroy(gameObject);
         }
+    }
+
+    void SelectedEvent(){
+        //Call upgrade police here
     }
 }

@@ -1009,12 +1009,12 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 861600544}
-        m_MethodName: 
+      - m_Target: {fileID: 861600549}
+        m_MethodName: ClickSkill
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1876,7 +1876,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_hSkill
       value: 
-      objectReference: {fileID: 11400000, guid: 4a4b5ff884740d545a548e683f75f899,
+      objectReference: {fileID: 11400000, guid: 803208270d34df44a88c296dbac429a6,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b8a69de32388e941a0c5680055df6b1, type: 3}
@@ -2122,7 +2122,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1807789750}
         m_MethodName: ClickSkill
         m_Mode: 1
         m_Arguments:
@@ -2331,12 +2331,12 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1835400070}
-        m_MethodName: 
+      - m_Target: {fileID: 1835400075}
+        m_MethodName: ClickSkill
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
