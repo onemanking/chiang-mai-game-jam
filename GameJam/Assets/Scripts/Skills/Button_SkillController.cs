@@ -13,6 +13,8 @@ public class Button_SkillController : MonoBehaviour
     [SerializeField] int m_nSkillOfficerID;
     [SerializeField] Slider m_hCooldownSlider;
 
+    [SerializeField] bool m_bShowNativeSideImage;
+
 #pragma warning restore 0649
     #endregion
 
@@ -36,11 +38,15 @@ public class Button_SkillController : MonoBehaviour
     private void OnEnable()
     {
         CGlobal_SkillManager.AddActionSpriteChange(m_nSkillOfficerID, SpriteChange);
+
+        CGlobal_SkillManager.AddActionCooldownChange(m_nSkillOfficerID, CooldownChange);
     }
 
     private void OnDisable()
     {
         CGlobal_SkillManager.RemoveActionSpriteChange(m_nSkillOfficerID, SpriteChange);
+
+        CGlobal_SkillManager.RemoveActionCooldownChange(m_nSkillOfficerID, CooldownChange);
     }
 
     #endregion
@@ -58,18 +64,22 @@ public class Button_SkillController : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    public void CooldownChange(float fCooldownTimeCount,float fCooldownTime)
+    void CooldownChange(float fValue)
     {
-        if (fCooldownTime <= 0)
-            return;
-
-        m_hCooldownSlider.maxValue = fCooldownTime;
-        m_hCooldownSlider.value = fCooldownTimeCount;
-
-        if (fCooldownTimeCount > 0)
-            m_hButton.interactable = false;
+        if (m_hCooldownSlider)
+        {
+            m_hCooldownSlider.maxValue = 1;
+            m_hCooldownSlider.value = 1 - fValue;
+        }
         else
-            m_hButton.interactable = true;
+        {
+            m_hImage.fillAmount = fValue;
+        }
+
+        if (fValue < 1)
+            m_hImage.raycastTarget = false;
+        else
+            m_hImage.raycastTarget = true;
     }
 
     #endregion
@@ -82,6 +92,9 @@ public class Button_SkillController : MonoBehaviour
     void SpriteChange(Sprite hSprite)
     {
         m_hImage.sprite = hSprite;
+
+        if (m_bShowNativeSideImage)
+            m_hImage.SetNativeSize();
     }
 
     #endregion
