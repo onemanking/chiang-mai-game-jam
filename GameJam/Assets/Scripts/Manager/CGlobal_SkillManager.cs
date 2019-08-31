@@ -1,14 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 #region Data
 
 public abstract class abst_Skill : ScriptableObject
 {
+    public abstract Sprite SkillSprite { get; }
+
+    public abstract Sprite SkillCutsceneSprite { get; }
+
     public abstract float CooldownTime { get; }
 
-    public abstract void UseSkill();
+    public abstract void UseSkill(Transform hOfficer);
 }
 
 #endregion
@@ -19,6 +24,7 @@ public sealed class CGlobal_SkillManager : MonoBehaviour
 
     struct SkillData
     {
+        public Transform m_hOfficer;
         public abst_Skill m_hSkill;
         public float m_fCooldownTime;
     }
@@ -26,6 +32,14 @@ public sealed class CGlobal_SkillManager : MonoBehaviour
     #endregion
 
     #region Variable
+
+    #region Variable - Inspector
+#pragma warning disable 0649
+
+    [SerializeField] UI_SkillCutsceneController m_hSkillCutsceneController;
+
+#pragma warning restore 0649
+    #endregion
 
     #region Variable - Property
 
@@ -50,6 +64,8 @@ public sealed class CGlobal_SkillManager : MonoBehaviour
 
     Dictionary<int, SkillData> m_dicTempOfficerSkill = new Dictionary<int, SkillData>();
 
+
+    Dictionary<int, UnityAction<Sprite>> m_dicActSpriteChange = new Dictionary<int, UnityAction<Sprite>>();
 
     #endregion
 
@@ -90,6 +106,9 @@ public sealed class CGlobal_SkillManager : MonoBehaviour
     /// </summary>
     void MainRegisterButtonSkill(Button_SkillController hController)
     {
+        if (hController == null)
+            return;
+
         if (m_lstButtonSkill.Contains(hController))
             return;
 
@@ -99,30 +118,85 @@ public sealed class CGlobal_SkillManager : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    public static void RegisterOfficerCharacterSkill(int nOfficerID,abst_Skill hSkill)
+    public static void AddActionSpriteChange(int nOfficerID,UnityAction<Sprite> hAction)
     {
-        Instance?.MainRegisterOfficerCharacterSkill(nOfficerID, hSkill);
+        Instance?.MainAddActionSpriteChange(nOfficerID,hAction);
     }
 
     /// <summary>
     /// 
     /// </summary>
-    void MainRegisterOfficerCharacterSkill(int nOfficerID, abst_Skill hSkill)
+    void MainAddActionSpriteChange(int nOfficerID, UnityAction<Sprite> hAction)
     {
-        if (m_dicOfficerSkill.ContainsKey(nOfficerID))
+        if (m_dicActSpriteChange.ContainsKey(nOfficerID))
         {
-            m_dicOfficerSkill[nOfficerID] = new SkillData
-            {
-                m_hSkill = hSkill,
-            };
+            m_dicActSpriteChange[nOfficerID] += hAction;
         }
         else
         {
-            m_dicOfficerSkill.Add(nOfficerID, new SkillData
-            {
-                m_hSkill = hSkill,
-            });
+            m_dicActSpriteChange.Add(nOfficerID, hAction);
         }
+
+
+        // Set current sprite
+        if (m_dicOfficerSkill.ContainsKey(nOfficerID) && m_dicOfficerSkill[nOfficerID].m_hSkill != null)
+        {
+            m_dicActSpriteChange[nOfficerID]?.Invoke(m_dicOfficerSkill[nOfficerID].m_hSkill.SkillSprite);
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public static void RemoveActionSpriteChange(int nOfficerID, UnityAction<Sprite> hAction)
+    {
+        if (m_hInstance == null)
+            return;
+
+        Instance.MainRemoveActionSpriteChange(nOfficerID, hAction);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void MainRemoveActionSpriteChange(int nOfficerID, UnityAction<Sprite> hAction)
+    {
+        if (!m_dicActSpriteChange.ContainsKey(nOfficerID))
+            return;
+
+        m_dicActSpriteChange[nOfficerID] -= hAction;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public static void RegisterOfficerCharacterSkill(Transform hOfficer,int nOfficerID,abst_Skill hSkill)
+    {
+        Instance?.MainRegisterOfficerCharacterSkill(hOfficer,nOfficerID, hSkill);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void MainRegisterOfficerCharacterSkill(Transform hOfficer, int nOfficerID, abst_Skill hSkill)
+    {
+        SkillData hData = new SkillData
+        {
+            m_hOfficer = hOfficer,
+            m_hSkill = hSkill,
+        };
+
+        if (m_dicOfficerSkill.ContainsKey(nOfficerID))
+        {
+            m_dicOfficerSkill[nOfficerID] = hData;
+        }
+        else
+        {
+            m_dicOfficerSkill.Add(nOfficerID, hData);
+        }
+
+        // Change Sprite Skill
+        ChangeSpriteSkill(nOfficerID, hSkill.SkillSprite);
     }
 
     /// <summary>
@@ -151,7 +225,7 @@ public sealed class CGlobal_SkillManager : MonoBehaviour
                 return;
             }
 
-            hOfficerSkill.m_hSkill.UseSkill();
+            hOfficerSkill.m_hSkill.UseSkill(hOfficerSkill.m_hOfficer);
             hOfficerSkill.m_fCooldownTime = m_dicOfficerSkill[nOfficerID].m_hSkill.CooldownTime;
 
             // Rewrite data
@@ -159,6 +233,8 @@ public sealed class CGlobal_SkillManager : MonoBehaviour
 
             // Update UI.
             SkillButtonCooldownChange(nOfficerID);
+
+            m_hSkillCutsceneController?.Show(hOfficerSkill.m_hSkill.SkillCutsceneSprite);
         }
         
     }
@@ -231,6 +307,17 @@ public sealed class CGlobal_SkillManager : MonoBehaviour
 
             break;
         }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void ChangeSpriteSkill(int nOfficerID,Sprite hSprite)
+    {
+        if (!m_dicActSpriteChange.ContainsKey(nOfficerID))
+            return;
+
+        m_dicActSpriteChange[nOfficerID]?.Invoke(hSprite);
     }
 
     #endregion
