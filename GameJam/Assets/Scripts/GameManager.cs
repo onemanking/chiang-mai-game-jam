@@ -22,20 +22,20 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	private enum GameState
+	public enum GameState
 	{
 		None,
+		WaitForWave,
 		Playing,
 		Pause,
 		Over
 	}
-
-	private GameState gameState;
-
+	public GameState gameState;
 	[SerializeField] private Transform[] m_SpawnPoint;
 	[SerializeField] private PrisonerBase m_PrisonerPrefab;
 	[SerializeField] private FloatReactiveProperty m_WallHp = new FloatReactiveProperty(100f);
 	[SerializeField] private int m_BossWaveEvery;
+	[SerializeField] private float m_SpawmDelay;
 
 	[Header("Wall")]
 	[SerializeField] private Renderer m_WallRenderer;
@@ -92,10 +92,10 @@ public class GameManager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (gameState == GameState.Over) return;
+		if (gameState != GameState.Playing) return;
 		if (Time.time >= spawnTimer)
 		{
-			spawnTimer = Time.time + 2;
+			spawnTimer = Time.time + m_SpawmDelay;
 			SpawnPrisoner();
 		}
 	}
