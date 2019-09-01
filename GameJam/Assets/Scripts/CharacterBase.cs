@@ -26,6 +26,7 @@ public abstract class CharacterBase : MonoBehaviour
 
 	protected Rigidbody rigid;
 	protected Collider coll;
+	private Animator anim;
 	protected int layerMask;
 	protected CharacterBase currentTarget;
 	private float attackTimer;
@@ -35,6 +36,7 @@ public abstract class CharacterBase : MonoBehaviour
 	{
 		rigid = GetComponent<Rigidbody>();
 		coll = GetComponent<Collider>();
+		anim = GetComponent<Animator>();
 		layerMask = 1 << gameObject.layer;
 		layerMask = ~layerMask;
 	}
@@ -63,6 +65,7 @@ public abstract class CharacterBase : MonoBehaviour
 		if (Time.time >= attackTimer)
 		{
 			attackTimer = Time.time + m_AttackDelay;
+			anim.Play("Attack");
 			currentTarget.TakeDamage(m_Damage);
 		}
 	}

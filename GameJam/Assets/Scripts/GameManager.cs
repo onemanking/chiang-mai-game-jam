@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
 	[Header("Wall")]
 	[SerializeField] private Renderer m_WallRenderer;
 	[SerializeField] private Material m_FlashMat;
+	[SerializeField] private Material m_DefaultMat;
 	[SerializeField] private Transform m_ExplosionTransform;
 
 	[Header("UI")]
@@ -78,6 +79,7 @@ public class GameManager : MonoBehaviour
 	private void GameOver()
 	{
 		gameState = GameState.Over;
+		m_WallRenderer.material = m_DefaultMat;
 		var characters = GameObject.FindObjectsOfType<CharacterBase>();
 		foreach (var character in characters)
 		{
@@ -125,10 +127,10 @@ public class GameManager : MonoBehaviour
 
 	private IEnumerator FlashWall()
 	{
-		var mat = m_WallRenderer.material;
+		if (!m_DefaultMat) m_DefaultMat = m_WallRenderer.material;
 		m_WallRenderer.material = m_FlashMat;
 		yield return new WaitForSeconds(0.05f);
-		m_WallRenderer.material = mat;
+		m_WallRenderer.material = m_DefaultMat;
 	}
 	#endregion
 }
