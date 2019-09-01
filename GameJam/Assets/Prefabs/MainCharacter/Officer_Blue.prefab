@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_hSkill: {fileID: 11400000, guid: 810da8e3c67861e43b30af16e5c96750, type: 2}
-  m_nOfficerID: 0
+  m_nOfficerID: 3
 --- !u!1 &2290542474561481466
 GameObject:
   m_ObjectHideFlags: 0

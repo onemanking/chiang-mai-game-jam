@@ -489,4 +489,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_hSkill: {fileID: 11400000, guid: 3464ad03a1d36404e832a97fd52d5f23, type: 2}
-  m_nOfficerID: 0
+  m_nOfficerID: 2
