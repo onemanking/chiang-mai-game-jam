@@ -5,6 +5,7 @@ public class justDying : MonoBehaviour
 {
     // Start is called before the first frame update
     private bool temp;
+    public Material newMat;
     public void omaewa_shindeiru(){
         for (int i = 0; i < 10000; i++)
         {
@@ -12,27 +13,31 @@ public class justDying : MonoBehaviour
             if(i%1000 == 0){
                 temp = !temp;
             }
-            Blink();
+            //Blink();
         }
     }
-    public void Blink(){
+    public void Blink(Shader newShade){
+        temp = !temp;
         if(temp){
-            White();
+            White(newShade);
         }else{
-            Black();
+            Black(newShade);
         }
     }
-    public void White(){
+    public void White(Shader newShade){
         foreach(MeshRenderer rend in GetComponentsInChildren<MeshRenderer>()){
             foreach(Material mat in rend.materials){
                mat.color = Color.white;
+               mat.shader = newShade;
             }
         }
     }
-    public void Black(){
+    public void Black(Shader newShade){
         foreach(MeshRenderer rend in GetComponentsInChildren<MeshRenderer>()){
             foreach(Material mat in rend.materials){
-               mat.color = Color.white;
+            mat.shader = newShade;
+               mat.color = Color.black;
+               
             }
         }
     }
