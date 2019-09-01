@@ -75,12 +75,17 @@ PrefabInstance:
     - target: {fileID: 3537248470403773236, guid: 456d6aae07004624f8de5f4016d55991,
         type: 3}
       propertyPath: m_AttackDelay
-      value: 0.5
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 3537248470403773236, guid: 456d6aae07004624f8de5f4016d55991,
         type: 3}
       propertyPath: m_Damage
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3537248470403773236, guid: 456d6aae07004624f8de5f4016d55991,
+        type: 3}
+      propertyPath: m_Hp
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 2950988208978991703, guid: 456d6aae07004624f8de5f4016d55991,
         type: 3}

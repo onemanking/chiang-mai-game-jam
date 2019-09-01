@@ -15,10 +15,9 @@ MonoBehaviour:
   m_sSkillName: Unbreakable
   m_hSpirte: {fileID: 21300000, guid: 9df4bc902791ded4cb9987e0b410cfd1, type: 3}
   m_hCutsceneSprite: {fileID: 21300000, guid: 64039400889e7114da95fbadfbcb6a27, type: 3}
-  m_fCooldown: 30
+  m_fCooldown: 15
   m_hStatusData: {fileID: 0}
   m_fHeal: 20
-  m_hParticle: {fileID: 2763087429422303674, guid: f831722722c08aa4fba0a6f5d70c9e55,
-    type: 3}
-  m_vOffset: {x: -1, y: 0, z: 0}
-  m_fParticleDuration: 2
+  m_hParticle: {fileID: 0}
+  m_vOffset: {x: 0, y: 0, z: 0}
+  m_fParticleDuration: 0

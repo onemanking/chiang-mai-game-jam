@@ -90,12 +90,12 @@ PrefabInstance:
     - target: {fileID: 3537248470403773236, guid: 456d6aae07004624f8de5f4016d55991,
         type: 3}
       propertyPath: m_Hp
-      value: 300
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 3537248470403773236, guid: 456d6aae07004624f8de5f4016d55991,
         type: 3}
       propertyPath: m_Damage
-      value: 20
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3537248470403773236, guid: 456d6aae07004624f8de5f4016d55991,
         type: 3}
