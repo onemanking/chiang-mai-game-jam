@@ -44,8 +44,8 @@ public class OfficerBase : CharacterBase
 
 	protected virtual void UpgradeAttackDelay(float _decreadAttackDelay)
 	{
-		m_AttackDelay = m_AttackDelay > 0 ? m_AttackDelay -= _decreadAttackDelay : 0;
-		m_AttackDelay = m_AttackDelay < 0 ? 0 : m_AttackDelay;
+		m_AttackDelay = m_AttackDelay > 0.1f ? m_AttackDelay -= _decreadAttackDelay : 0.1f;
+		m_AttackDelay = m_AttackDelay < 0.1f ? 0.1f : m_AttackDelay;
 	}
 
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -40,13 +41,36 @@ public class GameManager : MonoBehaviour
 	[Header("Wall")]
 	[SerializeField] private Renderer m_WallRenderer;
 	[SerializeField] private Material m_FlashMat;
-	[SerializeField] private Material m_DefaultMat;
 	[SerializeField] private Transform m_ExplosionTransform;
 
 	[Header("UI")]
 	[SerializeField] private Image m_HpBar;
+    [SerializeField] private TextMeshProUGUI m_WaveText;
+    [SerializeField] private float m_WaveTextShowDuration = 1.5f;
+
+    [Header("Wave")]
+    [SerializeField] private float m_WaveStartNewRoundDelay = 5f;
+    [SerializeField] private int m_WaveStartEnemyNumber = 10;
+    [SerializeField] private int m_NextWaveEnemyUpNumber = 2;
+    [SerializeField] private CharacterStatus m_NextWaveEnemyUpgrade;
 
 	private float spawnTimer;
+
+    Coroutine flashWallCouroutine;
+
+    // For wave
+    private bool spawningEnemy;
+    private bool waveEnd;
+    private int waveCount;
+    private int spawnCount;
+    private int waveSpawnMaxCount;
+    Coroutine nextWaveStartCouroutine;
+    private float showWaveTextDuration;
+
+    //Temp
+    float startSpeed = 2f;
+    float startDamage = 10f;
+    float startAtkDelay = 1;
 
 	private void Awake()
 	{
@@ -73,13 +97,12 @@ public class GameManager : MonoBehaviour
 			}
 		}).AddTo(this);
 
-		gameState = GameState.Playing;
+        nextWaveStartCouroutine = StartCoroutine(NextWaveStart());
 	}
 
 	private void GameOver()
 	{
 		gameState = GameState.Over;
-		m_WallRenderer.material = m_DefaultMat;
 		var characters = GameObject.FindObjectsOfType<CharacterBase>();
 		foreach (var character in characters)
 		{
@@ -96,7 +119,9 @@ public class GameManager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (gameState != GameState.Playing) return;
+        WaveUpdate();
+
+		if (gameState != GameState.Playing || !spawningEnemy) return;
 		if (Time.time >= spawnTimer)
 		{
 			spawnTimer = Time.time + m_SpawmDelay;
@@ -108,7 +133,8 @@ public class GameManager : MonoBehaviour
 	private void SpawnPrisoner()
 	{
 		var prisoner = Instantiate(m_PrisonerPrefab, RandomPoint(), Quaternion.identity);
-		prisoner.Init(_speed: 2, _dmg: 10, _atkDelay: 1);
+		
+        OnSpawnPrisoner(prisoner);
 	}
 	#endregion
 
@@ -121,16 +147,104 @@ public class GameManager : MonoBehaviour
 	public void WallTakeDamage(float _dmg)
 	{
 		m_WallHp.Value -= _dmg;
-		StopCoroutine(FlashWall());
-		StartCoroutine(FlashWall());
+
+        if (flashWallCouroutine != null)
+		    StopCoroutine(FlashWall());
+        flashWallCouroutine = StartCoroutine(FlashWall());
 	}
 
 	private IEnumerator FlashWall()
 	{
-		if (!m_DefaultMat) m_DefaultMat = m_WallRenderer.material;
+		var mat = m_WallRenderer.material;
 		m_WallRenderer.material = m_FlashMat;
 		yield return new WaitForSeconds(0.05f);
-		m_WallRenderer.material = m_DefaultMat;
+		m_WallRenderer.material = mat;
 	}
-	#endregion
+    #endregion
+
+    #region Wave
+
+    IEnumerator NextWaveStart()
+    {
+        if (gameState != GameState.None)
+        {
+            yield return new WaitForSeconds(1.5f);
+
+            m_WaveText.text = "Waiting for next wave.";
+
+            yield return new WaitForSeconds(m_WaveStartNewRoundDelay - 3f);
+
+            // Wave set
+            waveSpawnMaxCount = m_WaveStartEnemyNumber + waveCount * m_NextWaveEnemyUpNumber;                 
+        }
+        else
+        {
+            // First wave set
+            waveSpawnMaxCount = m_WaveStartEnemyNumber;
+        }
+
+        m_WaveText.text = "Wave : " + (waveCount + 1);
+
+        yield return new WaitForSeconds(1.5f);
+
+        m_WaveText.text = "Wave Start!!";
+
+        waveEnd = false;
+        spawningEnemy = true;
+        gameState = GameState.Playing;
+
+       
+        showWaveTextDuration = m_WaveTextShowDuration;
+    }
+
+    void WaveUpdate()
+    {
+        if (showWaveTextDuration > 0)
+        {
+            showWaveTextDuration -= Time.deltaTime;
+
+            if (showWaveTextDuration <= 0)
+                m_WaveText.text = "";
+        }
+
+        if(spawnCount >= waveSpawnMaxCount && !waveEnd)
+        {
+            var lstPrisoner = CGlobal_CharacterManager.GetCharacterList(TagType.Prisoner);
+            if(lstPrisoner == null || lstPrisoner.Count <= 0)
+                OnWaveEnd();
+
+            spawningEnemy = false;
+            return;
+        }
+
+
+    }
+
+    void OnSpawnPrisoner(PrisonerBase prisoner)
+    {
+        float fSpeed = prisoner.GetSpeed() + waveCount * m_NextWaveEnemyUpgrade.m_fSpeed;
+        float fDamage = prisoner.GetDamage() + waveCount * m_NextWaveEnemyUpgrade.m_fDamage;
+        float fAttackDelay = prisoner.GetAttackDelay() - waveCount * m_NextWaveEnemyUpgrade.m_fAttackDelay;
+
+        prisoner.Init(_speed: fSpeed, _dmg: fDamage, _atkDelay: fAttackDelay);
+
+
+        spawnCount++;
+    }
+
+    void OnWaveEnd()
+    {
+        gameState = GameState.Pause;
+        waveCount++;
+        waveEnd = true;
+
+        m_WaveText.text = "Wave End";
+
+        if (nextWaveStartCouroutine != null)
+            StopCoroutine(nextWaveStartCouroutine);
+
+        nextWaveStartCouroutine = StartCoroutine(NextWaveStart());
+    }
+
+    #endregion
 }

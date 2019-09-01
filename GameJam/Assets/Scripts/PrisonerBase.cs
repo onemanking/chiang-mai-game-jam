@@ -59,7 +59,7 @@ public class PrisonerBase : CharacterBase
 	{
 		m_Speed = _speed;
 		m_Damage = _dmg;
-		m_AttackDelay = _dmg;
+		m_AttackDelay = _atkDelay;
 	}
 
 	public void SetSpeed(float _speed)
@@ -70,5 +70,25 @@ public class PrisonerBase : CharacterBase
     public float GetSpeed()
     {
         return m_Speed;
+    }
+
+    public void SetDamage(float _damage)
+    {
+        m_Damage = _damage;
+    }
+
+    public float GetDamage()
+    {
+        return m_Damage;
+    }
+
+    public void SetAttackDelay(float _attackDelay)
+    {
+        m_AttackDelay = _attackDelay;
+    }
+
+    public float GetAttackDelay()
+    {
+        return m_AttackDelay;
     }
 }
