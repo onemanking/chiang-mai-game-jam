@@ -42,7 +42,7 @@ public class PrisonerBase : CharacterBase
 	protected override bool IsCanAttack(TargetTag _tag, out CharacterBase _target)
 	{
 		RaycastHit hit;
-		var boundSize = new Vector2(coll.bounds.extents.x, coll.bounds.extents.y * 10);
+		var boundSize = new Vector2(m_AttackWidth, coll.bounds.extents.y * 10);
 		if (Physics.BoxCast(transform.position, boundSize, transform.forward, out hit, Quaternion.LookRotation(transform.forward), m_AttackRange, layerMask))
 		{
 			_target = hit.collider.CompareTag(_tag.ToString()) ? hit.collider.GetComponent<CharacterBase>() : null;

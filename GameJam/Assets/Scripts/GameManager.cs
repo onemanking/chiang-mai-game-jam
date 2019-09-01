@@ -71,6 +71,8 @@ public class GameManager : MonoBehaviour
 				GameOver();
 			}
 		}).AddTo(this);
+
+		gameState = GameState.Playing;
 	}
 
 	private void GameOver()
@@ -117,7 +119,6 @@ public class GameManager : MonoBehaviour
 	public void WallTakeDamage(float _dmg)
 	{
 		m_WallHp.Value -= _dmg;
-		StopCoroutine(FlashWall());
 		StartCoroutine(FlashWall());
 	}
 

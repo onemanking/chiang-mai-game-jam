@@ -11,7 +11,7 @@ public class OfficerBase : CharacterBase
 	protected override bool IsCanAttack(TargetTag _tag, out CharacterBase _target)
 	{
 		RaycastHit hit;
-		if (Physics.BoxCast(transform.position, new Vector2(coll.bounds.extents.x, coll.bounds.extents.y * 10), transform.forward, out hit, Quaternion.LookRotation(transform.forward), m_AttackRange, layerMask))
+		if (Physics.BoxCast(transform.position, new Vector2(m_AttackWidth, coll.bounds.extents.y * 10), transform.forward, out hit, Quaternion.LookRotation(transform.forward), m_AttackRange, layerMask))
 		{
 			_target = hit.collider.CompareTag(_tag.ToString()) ? hit.collider.GetComponent<CharacterBase>() : null;
 			return _target != null;
