@@ -337,6 +337,7 @@ GameObject:
   - component: {fileID: 3212724500293562252}
   - component: {fileID: 4142508214781915153}
   - component: {fileID: 9097146958429193201}
+  - component: {fileID: 4755258829859268025}
   m_Layer: 8
   m_Name: Officer_Pink
   m_TagString: Officer
@@ -490,3 +491,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_hSkill: {fileID: 11400000, guid: 3464ad03a1d36404e832a97fd52d5f23, type: 2}
   m_nOfficerID: 2
+--- !u!95 &4755258829859268025
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7988284316848322531}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e6f97e86be78a524b87eff4a4ca94c31, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
