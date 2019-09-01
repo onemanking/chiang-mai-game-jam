@@ -393,16 +393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9118f1f29075c94418eecca1355d3cd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Background:
-  - {fileID: 300517598}
-  - {fileID: 1905934111}
-  - {fileID: 114390178}
-  - {fileID: 175525571}
-  skillImage:
-  - {fileID: 1534052101}
-  - {fileID: 2002491412}
-  - {fileID: 268747309}
-  - {fileID: 749390838}
+  PuaseScreen: {fileID: 0}
 --- !u!1 &175525566
 GameObject:
   m_ObjectHideFlags: 0
@@ -2918,12 +2909,19 @@ MonoBehaviour:
     value: 100
   m_BossWaveEvery: 5
   m_SpawmDelay: 2
+  m_PisonerGroupPrefab: []
   m_WallRenderer: {fileID: 2114417363}
   m_FlashMat: {fileID: 2100000, guid: 4eeb6bf15a0dca544adf89fea6c769b9, type: 2}
   m_ExplosionTransform: {fileID: 1836832392}
   m_HpBar: {fileID: 1123079709}
   m_WaveText: {fileID: 466557476}
   m_WaveTextShowDuration: 1.5
+  normalMesh: {fileID: -5258328165588150104, guid: 7cef9cf9d56dd694f8c7f84a305e1dc5,
+    type: 3}
+  damageMesh: {fileID: 326605537606088782, guid: f88f0ab26febbb349986909a0553ba89,
+    type: 3}
+  breakMesh: {fileID: -6253854931029496047, guid: e94c2b50a0062c848b2ac2d50906931c,
+    type: 3}
   m_WaveStartNewRoundDelay: 5
   m_WaveStartEnemyNumber: 10
   m_NextWaveEnemyUpNumber: 2
@@ -4417,6 +4415,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 7cef9cf9d56dd694f8c7f84a305e1dc5,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: a077e6bd01d0312458204795fdf729cf, type: 2}
     - target: {fileID: -1504981713932161579, guid: 7cef9cf9d56dd694f8c7f84a305e1dc5,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
