@@ -7,15 +7,22 @@ public class Officer_Skill_RocketBomb : Officer_BaseSkill
 {
     #region Variable - Inspector
 
-    [Header("Damage")]
+    [Header("Bomb")]
     [SerializeField] float m_fDamageMultiplier = 6f;
+    [SerializeField] Vector3 m_vThrowForce = new Vector3(150, 200, 0);
+    [SerializeField] Weapon_BombController m_hPrefabBomb;
 
     #endregion
 
     public override void UseSkill(Transform hOfficer)
     {
-        if (hOfficer == null)
+       
+        if (hOfficer == null || m_hPrefabBomb == null)
             return;
+
+        var hBombController = Instantiate(m_hPrefabBomb, hOfficer.position, Quaternion.identity);
+        hBombController.Init(hOfficer, m_fDamageMultiplier,m_vThrowForce);
+        return;
 
         var hOfficerBase = hOfficer.GetComponent<OfficerBase>();
 

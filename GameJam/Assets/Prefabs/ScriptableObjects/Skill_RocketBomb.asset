@@ -18,3 +18,5 @@ MonoBehaviour:
   m_fCooldown: 5
   m_hStatusData: {fileID: 11400000, guid: d2643aa79af5b224db2a4200cf815ba8, type: 2}
   m_fDamageMultiplier: 6
+  m_hPrefabBomb: {fileID: 2393598714228149920, guid: 95e33cabe8c9c284cac30ce97ecb72cb,
+    type: 3}

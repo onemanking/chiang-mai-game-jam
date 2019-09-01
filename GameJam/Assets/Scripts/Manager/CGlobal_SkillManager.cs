@@ -254,6 +254,13 @@ public sealed class CGlobal_SkillManager : MonoBehaviour
 
     void MainUseSkill(int nOfficerID)
     {
+        if (GameManager.Instance)
+        {
+            var eGameState = GameManager.Instance.gameState;
+            if (eGameState == GameManager.GameState.Pause || eGameState == GameManager.GameState.Over)
+                return;
+        }
+
         if (!m_dicOfficerSkill.ContainsKey(nOfficerID))
         {
             Debug.LogError("Don't have this officer ID!");
