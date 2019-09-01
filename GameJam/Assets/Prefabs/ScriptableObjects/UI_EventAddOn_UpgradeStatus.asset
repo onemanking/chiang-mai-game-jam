@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d379e479ebb61314bbdade16fe62ed16, type: 3}
   m_Name: UI_EventAddOn_UpgradeStatus
   m_EditorClassIdentifier: 
-  m_fUpDamage: 1
-  m_fDecreadAttackDelay: 0.1
+  m_fUpDamage: 0.5
+  m_fDecreadAttackDelay: 0.025
