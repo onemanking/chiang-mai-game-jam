@@ -241,7 +241,8 @@ public sealed class CGlobal_SkillManager : MonoBehaviour
         }
 
         // Change Sprite Skill
-        ChangeSpriteSkill(nOfficerID, hSkill.SkillSprite);
+        if(hSkill != null)
+            ChangeSpriteSkill(nOfficerID, hSkill.SkillSprite);
     }
 
     /// <summary>
