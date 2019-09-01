@@ -12,7 +12,7 @@ public class Officer_SkillController : MonoBehaviour
     [SerializeField] abst_Skill m_hSkill;
 
     [Header("Test")]
-    [SerializeField] int m_nOfficerID;
+    [SerializeField] int m_nOfficerID = -1;
 
 #pragma warning restore 0649
     #endregion
@@ -23,10 +23,12 @@ public class Officer_SkillController : MonoBehaviour
 
     private void Awake()
     {
-        CGlobal_SkillManager.RegisterOfficerCharacterSkill(transform,m_nOfficerID, m_hSkill);
+        if(m_nOfficerID >= 0)
+            CGlobal_SkillManager.RegisterOfficerCharacterSkill(transform,m_nOfficerID, m_hSkill);
 
+        // Don't use now.
         // Override stats. (Now can't overlap)
-        StatusOverride(1);
+        //StatusOverride(1);
     }
 
     #endregion

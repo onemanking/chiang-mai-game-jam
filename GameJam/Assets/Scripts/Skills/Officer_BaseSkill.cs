@@ -9,6 +9,9 @@ public abstract class Officer_BaseSkill : abst_Skill
     #region Variable - Inspector
 #pragma warning disable 0649
 
+    [Header("Name")]
+    [SerializeField] protected string m_sSkillName;
+
     [Header("Icon")]
     [SerializeField] protected Sprite m_hSpirte;
 
@@ -24,6 +27,7 @@ public abstract class Officer_BaseSkill : abst_Skill
 #pragma warning restore 0649
     #endregion
 
+    public override string SkillName { get { return m_sSkillName; } }
     public override Sprite SkillSprite { get { return m_hSpirte; } }
 
     public override Sprite SkillCutsceneSprite { get { return m_hCutsceneSprite; } }

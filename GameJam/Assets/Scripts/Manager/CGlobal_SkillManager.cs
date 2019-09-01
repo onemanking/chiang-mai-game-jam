@@ -7,6 +7,7 @@ using UnityEngine.Events;
 
 public abstract class abst_Skill : ScriptableObject
 {
+    public abstract string SkillName { get; }
     public abstract Sprite SkillSprite { get; }
 
     public abstract Sprite SkillCutsceneSprite { get; }
@@ -280,7 +281,8 @@ public sealed class CGlobal_SkillManager : MonoBehaviour
                 m_dicActCooldownChange[nOfficerID]?.Invoke(0);
             }
 
-            m_hSkillCutsceneController?.Show(hOfficerSkill.m_hSkill.SkillCutsceneSprite);
+            if(hOfficerSkill.m_hSkill.SkillCutsceneSprite)
+                m_hSkillCutsceneController?.Show(hOfficerSkill.m_hSkill.SkillCutsceneSprite);
         }
         
     }
