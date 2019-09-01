@@ -281,7 +281,8 @@ public sealed class CGlobal_SkillManager : MonoBehaviour
                 m_dicActCooldownChange[nOfficerID]?.Invoke(0);
             }
 
-            m_hSkillCutsceneController?.Show(hOfficerSkill.m_hSkill.SkillCutsceneSprite);
+            if(hOfficerSkill.m_hSkill.SkillCutsceneSprite)
+                m_hSkillCutsceneController?.Show(hOfficerSkill.m_hSkill.SkillCutsceneSprite);
         }
         
     }
