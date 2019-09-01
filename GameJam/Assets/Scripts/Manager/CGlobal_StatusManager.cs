@@ -407,7 +407,7 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
     /// </summary>
     int GetUpgrageCost(int nLevel)
     {
-        return nLevel * 10;
+        return (nLevel + 1) * 10;
     }
 
     /// <summary>

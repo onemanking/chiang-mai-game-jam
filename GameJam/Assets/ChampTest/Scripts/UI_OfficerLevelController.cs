@@ -26,6 +26,18 @@ public class UI_OfficerLevelController : MonoBehaviour
 
     #region Base - Mono
 
+    private void Update()
+    {
+        if(GameManager.Instance != null)
+        {
+            if(GameManager.Instance.gameState == GameManager.GameState.Over)
+            {
+                // Temp
+                Destroy(gameObject);
+            }
+        }
+    }
+
     private void OnDestroy()
     {
         CGlobal_StatusManager.RemoveActionOnUpgradeThisCharacter(transform.parent, OnUpgradeCharacter);
