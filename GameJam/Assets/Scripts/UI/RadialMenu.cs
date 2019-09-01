@@ -6,6 +6,7 @@ public class RadialMenu : MonoBehaviour
 {
     private int angleCount = 9;
     private float offsetAboveHead = 0.3f;
+   
     public RadialButton selected;
     public RadialButton[] PrefabArray;
     Camera m_MainCamera;
@@ -22,9 +23,9 @@ public class RadialMenu : MonoBehaviour
         {
             RadialButton newButton =  Instantiate(PrefabArray[i]) as RadialButton;
             newButton.transform.SetParent(transform,false);
-            float theta = (2* Mathf.PI / angleCount) * (i-1);
-            float xPos = Mathf.Sin(theta);
-            float yPos = Mathf.Cos(theta);
+            float theta = (2* Mathf.PI / angleCount) * (i);
+            float xPos = Mathf.Sin(theta-0.523599f);
+            float yPos = Mathf.Cos(theta-0.523599f);
             newButton.transform.localPosition = new Vector3(xPos,yPos + offsetAboveHead ,0f) * 2f;
             newButton.myMenu = this;
         }
