@@ -5,7 +5,7 @@ using UnityEngine;
 public class RadialMenu : MonoBehaviour
 {
     private int angleCount = 9;
-    private float offsetAboveHead = 0.3f;
+    private float offsetAboveHead = 0.8f;
    
     public RadialButton selected;
     public RadialButton[] PrefabArray;
