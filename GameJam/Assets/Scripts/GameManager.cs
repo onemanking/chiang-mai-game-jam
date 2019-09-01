@@ -184,6 +184,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator NextWaveStart()
     {
+        spawnCount = 0;
+
         if (gameState != GameState.None)
         {
             yield return new WaitForSeconds(1.5f);
@@ -207,12 +209,15 @@ public class GameManager : MonoBehaviour
 
         m_WaveText.text = "Wave Start!!";
 
+        yield return new WaitForSeconds(1f);
+        
+
         waveEnd = false;
         spawningEnemy = true;
         gameState = GameState.Playing;
 
        
-        showWaveTextDuration = m_WaveTextShowDuration;
+        showWaveTextDuration = m_WaveTextShowDuration - 1;
     }
 
     void WaveUpdate()
