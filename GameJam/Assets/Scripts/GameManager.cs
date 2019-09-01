@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
 	private float spawnTimer;
 
     Coroutine flashWallCouroutine;
+    Material wallMaterial;
 
     // For wave
     private bool spawningEnemy;
@@ -102,6 +103,13 @@ public class GameManager : MonoBehaviour
 
 	private void GameOver()
 	{
+        // Stop couroutin
+        if (nextWaveStartCouroutine != null)
+        {
+            m_WaveText.text = "Game Over";
+            StopCoroutine(nextWaveStartCouroutine);
+        }
+
 		gameState = GameState.Over;
 		var characters = GameObject.FindObjectsOfType<CharacterBase>();
 		foreach (var character in characters)
@@ -119,7 +127,8 @@ public class GameManager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-        WaveUpdate();
+        if(gameState != GameState.Over)
+            WaveUpdate();
 
 		if (gameState != GameState.Playing || !spawningEnemy) return;
 		if (Time.time >= spawnTimer)
@@ -149,17 +158,26 @@ public class GameManager : MonoBehaviour
 		m_WallHp.Value -= _dmg;
 
         if (flashWallCouroutine != null)
-		    StopCoroutine(FlashWall());
+        {
+            FlashWallEnd();
+            StopCoroutine(FlashWall());
+        }
         flashWallCouroutine = StartCoroutine(FlashWall());
 	}
 
 	private IEnumerator FlashWall()
 	{
-		var mat = m_WallRenderer.material;
+		wallMaterial = m_WallRenderer.material;
 		m_WallRenderer.material = m_FlashMat;
 		yield return new WaitForSeconds(0.05f);
-		m_WallRenderer.material = mat;
+        FlashWallEnd();
 	}
+
+    private void FlashWallEnd()
+    {
+        m_WallRenderer.material = wallMaterial;
+    }
+
     #endregion
 
     #region Wave
