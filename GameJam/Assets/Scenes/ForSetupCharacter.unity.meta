@@ -1,5 +1,10 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:GameJam/Assets/Scenes/ForSetupCharacter.unity.meta
 guid: c4138dcb22fc2ee4a97d841b2752f74e
+=======
+guid: 9ee8ee2f6a3394146aee904eb3e7ad80
+folderAsset: yes
+>>>>>>> 425f2567094bac7bc226adab8657faaaa562f4a4:GameJam/Assets/Prefabs/UI/Anim.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
