@@ -2596,6 +2596,10 @@ MonoBehaviour:
     value: 100
   m_BossWaveEvery: 5
   m_SpawmDelay: 2
+  m_PisonerGroupPrefab:
+  - {fileID: 3537248470403773236, guid: 456d6aae07004624f8de5f4016d55991, type: 3}
+  - {fileID: 6169815072041304083, guid: 635fc5b2ee7eb0f45b2c9f128305ae96, type: 3}
+  - {fileID: 107496384146446953, guid: 4583f9cf874a3634c91ebd5d968c7855, type: 3}
   m_WallRenderer: {fileID: 2114417363}
   m_FlashMat: {fileID: 2100000, guid: 4eeb6bf15a0dca544adf89fea6c769b9, type: 2}
   m_ExplosionTransform: {fileID: 1836832392}
@@ -2838,7 +2842,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 22403254, guid: 60da1df1f7edb3747bea8f735b2768d1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 407.3
+      value: 407.30078
       objectReference: {fileID: 0}
     - target: {fileID: 22403254, guid: 60da1df1f7edb3747bea8f735b2768d1, type: 3}
       propertyPath: m_AnchoredPosition.y

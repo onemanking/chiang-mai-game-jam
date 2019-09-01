@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
 	[SerializeField] private int m_BossWaveEvery;
 	[SerializeField] private float m_SpawmDelay;
 
+    [SerializeField] private PrisonerBase[] m_PisonerGroupPrefab;
+
 	[Header("Wall")]
 	[SerializeField] private Renderer m_WallRenderer;
 	[SerializeField] private Material m_FlashMat;
@@ -141,7 +143,17 @@ public class GameManager : MonoBehaviour
 	#region SPAWN
 	private void SpawnPrisoner()
 	{
-		var prisoner = Instantiate(m_PrisonerPrefab, RandomPoint(), Quaternion.identity);
+        PrisonerBase hRandomPrisoner = m_PrisonerPrefab;
+
+        if (m_PisonerGroupPrefab != null && m_PisonerGroupPrefab.Length > 0)
+        {
+            int ranNum = Random.Range(0, m_PisonerGroupPrefab.Length);
+            hRandomPrisoner = m_PisonerGroupPrefab[ranNum];
+        }
+
+        
+
+		var prisoner = Instantiate(hRandomPrisoner, RandomPoint(), Quaternion.identity);
 		
         OnSpawnPrisoner(prisoner);
 	}
