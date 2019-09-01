@@ -16,6 +16,7 @@ public abstract class CharacterBase : MonoBehaviour
 	[SerializeField] protected float m_Damage = 10;
 	[SerializeField] protected float m_AttackDelay = 1;
 	[SerializeField] protected float m_AttackRange = 1;
+	[SerializeField] protected float m_AttackWidth = 1;
 	[SerializeField] protected TargetTag m_TargetTag;
 
 	[Header("Animation")]
@@ -99,6 +100,6 @@ public abstract class CharacterBase : MonoBehaviour
 	private void OnDrawGizmos()
 	{
 		if (coll)
-			Gizmos.DrawWireCube(transform.position, new Vector3(coll.bounds.extents.x, coll.bounds.extents.y * 10, coll.bounds.size.z * 2 * m_AttackRange));
+			Gizmos.DrawWireCube(transform.position, new Vector3(m_AttackWidth, coll.bounds.extents.y * 10, coll.bounds.size.z * 2 * m_AttackRange));
 	}
 }
