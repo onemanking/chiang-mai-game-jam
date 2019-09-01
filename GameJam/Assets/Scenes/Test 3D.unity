@@ -393,16 +393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9118f1f29075c94418eecca1355d3cd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Background:
-  - {fileID: 300517598}
-  - {fileID: 1905934111}
-  - {fileID: 114390178}
-  - {fileID: 175525571}
-  skillImage:
-  - {fileID: 1534052101}
-  - {fileID: 2002491412}
-  - {fileID: 268747309}
-  - {fileID: 749390838}
+  PuaseScreen: {fileID: 1099452405}
 --- !u!1 &175525566
 GameObject:
   m_ObjectHideFlags: 0
@@ -1630,7 +1621,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 682726000}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 175401369}
+        m_MethodName: MainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &682726000
@@ -2350,7 +2352,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1031931263}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 175401369}
+        m_MethodName: resume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1031931263
@@ -2442,7 +2455,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1099452406
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2918,6 +2931,7 @@ MonoBehaviour:
     value: 100
   m_BossWaveEvery: 5
   m_SpawmDelay: 2
+  m_PisonerGroupPrefab: []
   m_WallRenderer: {fileID: 2114417363}
   m_FlashMat: {fileID: 2100000, guid: 4eeb6bf15a0dca544adf89fea6c769b9, type: 2}
   m_ExplosionTransform: {fileID: 1836832392}
@@ -3130,7 +3144,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1586428152}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 175401369}
+        m_MethodName: puase
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1001 &1589931175

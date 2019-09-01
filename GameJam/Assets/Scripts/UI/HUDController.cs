@@ -1,6 +1,6 @@
 ﻿
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class HUDController : MonoBehaviour
 {
@@ -10,5 +10,8 @@ public class HUDController : MonoBehaviour
     }
     public void resume(){
         PuaseScreen.SetActive(false);
+    }
+    public void MainMenu(){
+        SceneManager.LoadScene("mainMenu");
     }
 }
