@@ -991,6 +991,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1974455647}
     m_Modifications:
+    - target: {fileID: -5650286429489087572, guid: 668455b5d6bb5064f835da1a90d91022,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2092310091948266058, guid: 668455b5d6bb5064f835da1a90d91022,
         type: 3}
       propertyPath: m_Name
@@ -1681,6 +1686,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1974455647}
     m_Modifications:
+    - target: {fileID: -4541035786843118139, guid: 6b80253c3093fc6458aeacdecdf9afce,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7988284316848322531, guid: 6b80253c3093fc6458aeacdecdf9afce,
         type: 3}
       propertyPath: m_Name
@@ -2012,6 +2022,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1974455647}
     m_Modifications:
+    - target: {fileID: -5977832564898446509, guid: 44493c6582c2ea742b199c2353173987,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6883916164684379069, guid: 44493c6582c2ea742b199c2353173987,
         type: 3}
       propertyPath: m_Name
@@ -2814,9 +2829,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e2c893c82162b26459b4281e98accede, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 146986bc370430545b9387100d13ed42, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -3092,6 +3107,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1974455647}
     m_Modifications:
+    - target: {fileID: -5606511888185166144, guid: 78059a184d4cb944e9848e0a121b754d,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4286251441544325428, guid: 78059a184d4cb944e9848e0a121b754d,
         type: 3}
       propertyPath: m_Name

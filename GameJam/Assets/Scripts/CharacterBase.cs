@@ -23,10 +23,12 @@ public abstract class CharacterBase : MonoBehaviour
 	[SerializeField] protected Transform head;
 	[SerializeField] protected Transform[] rotatableParts;
 	[SerializeField] private ParticleSystem m_particle;
+	[SerializeField] private AudioClip m_AttackSound;
 
 	protected Rigidbody rigid;
 	protected Collider coll;
 	private Animator anim;
+	private AudioSource audioSource;
 	protected int layerMask;
 	protected CharacterBase currentTarget;
 	private float attackTimer;
@@ -37,6 +39,7 @@ public abstract class CharacterBase : MonoBehaviour
 		rigid = GetComponent<Rigidbody>();
 		coll = GetComponent<Collider>();
 		anim = GetComponent<Animator>();
+		audioSource = GetComponent<AudioSource>();
 		layerMask = 1 << gameObject.layer;
 		layerMask = ~layerMask;
 	}
@@ -66,6 +69,7 @@ public abstract class CharacterBase : MonoBehaviour
 		{
 			attackTimer = Time.time + m_AttackDelay;
 			anim.Play("Attack");
+			if(audioSource) audioSource.PlayOneShot(m_AttackSound);
 			currentTarget.TakeDamage(m_Damage);
 		}
 	}
