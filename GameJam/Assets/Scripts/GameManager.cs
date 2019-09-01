@@ -119,6 +119,7 @@ public class GameManager : MonoBehaviour
 	public void WallTakeDamage(float _dmg)
 	{
 		m_WallHp.Value -= _dmg;
+		StopCoroutine(FlashWall());
 		StartCoroutine(FlashWall());
 	}
 
