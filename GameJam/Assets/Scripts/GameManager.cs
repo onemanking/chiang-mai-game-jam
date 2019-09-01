@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
 	[SerializeField] private Renderer m_WallRenderer;
 	[SerializeField] private Material m_FlashMat;
 	[SerializeField] private Transform m_ExplosionTransform;
+	[SerializeField] private Material wallMaterial;
 
 	[Header("UI")]
 	[SerializeField] private Image m_HpBar;
@@ -62,7 +63,6 @@ public class GameManager : MonoBehaviour
 	private float spawnTimer;
 
 	Coroutine flashWallCouroutine;
-	Material wallMaterial;
 
 	// For wave
 	private bool spawningEnemy;
@@ -94,20 +94,23 @@ public class GameManager : MonoBehaviour
 	void Start()
 	{
 		// Observeable for wall taken damage
+		bool isDmg = false;
 		m_WallHp.Subscribe(x =>
 		{
 			m_HpBar.fillAmount = m_WallHp.Value / 100;
-			if (x <= 50 && m_WallRenderer.GetComponent<MeshFilter>().mesh != damageMesh)
+			if (x <= 50 && !isDmg)
 			{
 				m_WallRenderer.GetComponent<MeshFilter>().mesh = damageMesh;
 				m_WallRenderer.material = wallMaterial;
+				isDmg = true;
 			}
-			else if (x > 50 && m_WallRenderer.GetComponent<MeshFilter>().mesh == normalMesh)
+			else if (x > 50 && isDmg)
 			{
 				m_WallRenderer.GetComponent<MeshFilter>().mesh = normalMesh;
 				m_WallRenderer.material = wallMaterial;
+				isDmg = false;
 			}
-			else if (x <= 0)
+			else if (x <= 0 && isDmg)
 			{
 				GameOver();
 			}
@@ -192,10 +195,10 @@ public class GameManager : MonoBehaviour
 		flashWallCouroutine = StartCoroutine(FlashWall());
 	}
 
-    public void WallHeal(float _heal)
-    {
-        m_WallHp.Value += _heal;
-    }
+	public void WallHeal(float _heal)
+	{
+		m_WallHp.Value += _heal;
+	}
 
 	private IEnumerator FlashWall()
 	{
