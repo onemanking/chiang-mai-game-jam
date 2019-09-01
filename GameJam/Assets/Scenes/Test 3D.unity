@@ -2935,6 +2935,7 @@ MonoBehaviour:
   m_WallRenderer: {fileID: 2114417363}
   m_FlashMat: {fileID: 2100000, guid: 4eeb6bf15a0dca544adf89fea6c769b9, type: 2}
   m_ExplosionTransform: {fileID: 1836832392}
+  wallMaterial: {fileID: 2100000, guid: a077e6bd01d0312458204795fdf729cf, type: 2}
   m_HpBar: {fileID: 1123079709}
   m_WaveText: {fileID: 466557476}
   m_WaveTextShowDuration: 1.5
@@ -3237,7 +3238,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 22403254, guid: 60da1df1f7edb3747bea8f735b2768d1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 407.3
+      value: 407.30078
       objectReference: {fileID: 0}
     - target: {fileID: 22403254, guid: 60da1df1f7edb3747bea8f735b2768d1, type: 3}
       propertyPath: m_AnchoredPosition.y
