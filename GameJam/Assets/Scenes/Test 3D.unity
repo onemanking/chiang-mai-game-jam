@@ -393,7 +393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9118f1f29075c94418eecca1355d3cd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PuaseScreen: {fileID: 0}
+  PuaseScreen: {fileID: 1099452405}
 --- !u!1 &175525566
 GameObject:
   m_ObjectHideFlags: 0
@@ -2931,7 +2931,10 @@ MonoBehaviour:
     value: 100
   m_BossWaveEvery: 5
   m_SpawmDelay: 2
-  m_PisonerGroupPrefab: []
+  m_PisonerGroupPrefab:
+  - {fileID: 3537248470403773236, guid: 456d6aae07004624f8de5f4016d55991, type: 3}
+  - {fileID: 6169815072041304083, guid: 635fc5b2ee7eb0f45b2c9f128305ae96, type: 3}
+  - {fileID: 107496384146446953, guid: 4583f9cf874a3634c91ebd5d968c7855, type: 3}
   m_WallRenderer: {fileID: 2114417363}
   m_FlashMat: {fileID: 2100000, guid: 4eeb6bf15a0dca544adf89fea6c769b9, type: 2}
   m_ExplosionTransform: {fileID: 1836832392}

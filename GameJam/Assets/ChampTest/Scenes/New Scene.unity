@@ -2597,6 +2597,12 @@ MonoBehaviour:
   m_HpBar: {fileID: 1123079709}
   m_WaveText: {fileID: 466557476}
   m_WaveTextShowDuration: 1.5
+  normalMesh: {fileID: -5258328165588150104, guid: ce353d3f26eb89145b63bf9f192a8283,
+    type: 3}
+  damageMesh: {fileID: 326605537606088782, guid: f88f0ab26febbb349986909a0553ba89,
+    type: 3}
+  breakMesh: {fileID: -6253854931029496047, guid: e94c2b50a0062c848b2ac2d50906931c,
+    type: 3}
   m_WaveStartNewRoundDelay: 5
   m_WaveStartEnemyNumber: 10
   m_NextWaveEnemyUpNumber: 2
