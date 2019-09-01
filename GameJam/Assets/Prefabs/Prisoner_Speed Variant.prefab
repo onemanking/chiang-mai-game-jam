@@ -70,7 +70,7 @@ PrefabInstance:
     - target: {fileID: 3537248470403773236, guid: 456d6aae07004624f8de5f4016d55991,
         type: 3}
       propertyPath: m_Speed
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3537248470403773236, guid: 456d6aae07004624f8de5f4016d55991,
         type: 3}
@@ -80,12 +80,12 @@ PrefabInstance:
     - target: {fileID: 3537248470403773236, guid: 456d6aae07004624f8de5f4016d55991,
         type: 3}
       propertyPath: m_Damage
-      value: 5
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 2950988208978991703, guid: 456d6aae07004624f8de5f4016d55991,
         type: 3}
       propertyPath: m_nMoneyDrop
-      value: 15
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4730898361169673760, guid: 456d6aae07004624f8de5f4016d55991,
         type: 3}
