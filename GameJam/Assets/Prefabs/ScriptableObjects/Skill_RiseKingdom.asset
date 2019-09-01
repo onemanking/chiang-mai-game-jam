@@ -15,6 +15,6 @@ MonoBehaviour:
   m_sSkillName: Unbreakable
   m_hSpirte: {fileID: 21300000, guid: 9df4bc902791ded4cb9987e0b410cfd1, type: 3}
   m_hCutsceneSprite: {fileID: 21300000, guid: 64039400889e7114da95fbadfbcb6a27, type: 3}
-  m_fCooldown: 15
+  m_fCooldown: 20
   m_hStatusData: {fileID: 0}
   m_fHeal: 20

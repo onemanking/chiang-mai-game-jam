@@ -15,7 +15,7 @@ MonoBehaviour:
   m_sSkillName: Heart Breaker
   m_hSpirte: {fileID: 21300000, guid: 3f724b7eb14155440b0920c7744209a0, type: 3}
   m_hCutsceneSprite: {fileID: 21300000, guid: 1375a0a3bc4255142bf5c8a2aeae978f, type: 3}
-  m_fCooldown: 10
+  m_fCooldown: 15
   m_hStatusData: {fileID: 0}
   m_fDebuffSpeedMultiplier: 0.3
   m_fDebuffSpeedDuration: 5
