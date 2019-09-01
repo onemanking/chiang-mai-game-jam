@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
 				m_WallRenderer.GetComponent<MeshFilter>().mesh = normalMesh;
 				m_WallRenderer.material = wallMaterial;
 			}
-			if (x <= 0)
+			else if (x <= 0)
 			{
 				GameOver();
 			}
