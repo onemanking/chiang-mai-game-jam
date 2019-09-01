@@ -258,7 +258,7 @@ public sealed class CGlobal_SkillManager : MonoBehaviour
         if (GameManager.Instance)
         {
             var eGameState = GameManager.Instance.gameState;
-            if (eGameState == GameManager.GameState.Pause || eGameState == GameManager.GameState.Over)
+            if (eGameState == GameManager.GameState.Over)
                 return;
         }
 

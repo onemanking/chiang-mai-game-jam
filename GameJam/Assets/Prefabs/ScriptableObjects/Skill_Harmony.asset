@@ -20,3 +20,6 @@ MonoBehaviour:
   m_fDamageMultiplier: 1.3
   m_fDecreaseAttackDelay: 0.3
   m_fDuration: 4
+  m_hParticle: {fileID: 8459302022445635426, guid: 0bce1ee998c40a2419181f6b18511434,
+    type: 3}
+  m_vOffset: {x: 0.5, y: 0, z: 0}

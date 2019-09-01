@@ -27,7 +27,7 @@ public class Officer_Skill_RiseKingdom : Officer_BaseSkill
         {
             var hParticle = Instantiate(m_hParticle, hOfficer.position + m_vOffset, Quaternion.Euler(-90, 0, 0));
 
-            Destroy(hParticle, m_fParticleDuration);
+            Destroy(hParticle.gameObject, m_fParticleDuration);
         }
     }
 }

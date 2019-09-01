@@ -18,3 +18,7 @@ MonoBehaviour:
   m_fCooldown: 30
   m_hStatusData: {fileID: 0}
   m_fHeal: 20
+  m_hParticle: {fileID: 2763087429422303674, guid: f831722722c08aa4fba0a6f5d70c9e55,
+    type: 3}
+  m_vOffset: {x: -1, y: 0, z: 0}
+  m_fParticleDuration: 2

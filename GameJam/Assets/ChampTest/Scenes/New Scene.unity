@@ -393,16 +393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9118f1f29075c94418eecca1355d3cd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Background:
-  - {fileID: 300517598}
-  - {fileID: 1905934111}
-  - {fileID: 114390178}
-  - {fileID: 175525571}
-  skillImage:
-  - {fileID: 1534052101}
-  - {fileID: 2002491412}
-  - {fileID: 268747309}
-  - {fileID: 749390838}
+  PuaseScreen: {fileID: 0}
 --- !u!1 &175525566
 GameObject:
   m_ObjectHideFlags: 0

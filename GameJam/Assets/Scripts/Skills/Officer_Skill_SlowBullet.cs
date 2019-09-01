@@ -30,7 +30,7 @@ public class Officer_Skill_SlowBullet : Officer_BaseSkill
         if (m_hParticle)
         {
             var hParticle = Instantiate(m_hParticle, hOfficer.position + m_vOffset, Quaternion.Euler(-90,0,0));
-            Destroy(hParticle, m_fDebuffSpeedDuration);
+            Destroy(hParticle.gameObject, m_fDebuffSpeedDuration);
         }
     }
 }
