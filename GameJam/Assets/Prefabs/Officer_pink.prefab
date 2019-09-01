@@ -177,6 +177,7 @@ GameObject:
   - component: {fileID: 921638379838371855}
   - component: {fileID: 8274714584828873055}
   - component: {fileID: 241145514805050107}
+  - component: {fileID: 3171274511994411037}
   m_Layer: 8
   m_Name: Officer_pink
   m_TagString: Officer
@@ -316,6 +317,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0ab4e2ef93ed3641850cf08e2f747a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3171274511994411037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5152196996596466611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e21cdf5a862ba1448806bf9278c418c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_hSkill: {fileID: 11400000, guid: 3464ad03a1d36404e832a97fd52d5f23, type: 2}
+  m_nOfficerID: 2
 --- !u!1 &8201950942602266029
 GameObject:
   m_ObjectHideFlags: 0

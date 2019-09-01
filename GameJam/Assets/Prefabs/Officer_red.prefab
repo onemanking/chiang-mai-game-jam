@@ -176,6 +176,7 @@ GameObject:
   - component: {fileID: 5960502125457897200}
   - component: {fileID: 4837187128182584089}
   - component: {fileID: 147704240782073438}
+  - component: {fileID: 2951887989767170110}
   m_Layer: 8
   m_Name: Officer_red
   m_TagString: Officer
@@ -316,6 +317,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0ab4e2ef93ed3641850cf08e2f747a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2951887989767170110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6432531910897922319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e21cdf5a862ba1448806bf9278c418c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_hSkill: {fileID: 11400000, guid: 803208270d34df44a88c296dbac429a6, type: 2}
+  m_nOfficerID: 0
 --- !u!1 &6918647342211366534
 GameObject:
   m_ObjectHideFlags: 0

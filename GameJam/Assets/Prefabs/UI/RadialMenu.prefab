@@ -50,6 +50,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selected: {fileID: 0}
   PrefabArray:
-  - {fileID: 5794096092751450279, guid: 75bfee564095acf4b9c012f82e60ff23, type: 3}
   - {fileID: 5794096092751450279, guid: be36f39bbd2f4c048a419a6997632842, type: 3}
   owner: {fileID: 0}

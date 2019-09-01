@@ -252,6 +252,7 @@ GameObject:
   - component: {fileID: 1457091667287893924}
   - component: {fileID: 4443422439911113477}
   - component: {fileID: 2644590891648613657}
+  - component: {fileID: 221022823646533521}
   m_Layer: 8
   m_Name: Officer_black
   m_TagString: Officer
@@ -392,6 +393,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0ab4e2ef93ed3641850cf08e2f747a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &221022823646533521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7131843132882495995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e21cdf5a862ba1448806bf9278c418c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_hSkill: {fileID: 11400000, guid: 4a4b5ff884740d545a548e683f75f899, type: 2}
+  m_nOfficerID: 1
 --- !u!1 &8047010501143300606
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,9 +24,9 @@ public class RadialMenu : MonoBehaviour
             RadialButton newButton =  Instantiate(PrefabArray[i]) as RadialButton;
             newButton.transform.SetParent(transform,false);
             float theta = (2* Mathf.PI / angleCount) * (i);
-            float xPos = Mathf.Sin(theta-0.523599f);
-            float yPos = Mathf.Cos(theta-0.523599f);
-            newButton.transform.localPosition = new Vector3(xPos,yPos + offsetAboveHead ,0f) * 2f;
+            float xPos = Mathf.Sin(theta);
+            float yPos = Mathf.Cos(theta);
+            newButton.transform.localPosition = new Vector3(xPos,yPos + offsetAboveHead ,0f)*1f;
             newButton.myMenu = this;
         }
     }
@@ -38,7 +38,7 @@ public class RadialMenu : MonoBehaviour
             if(selected){
                 SelectedEvent();
             }
-           Destroy(gameObject);
+           //Destroy(gameObject);
         }
     }
 
