@@ -26,6 +26,7 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
     struct DebuffSpeedCharacterData
     {
         public PrisonerBase m_hBase;
+        public float m_fOriginalAttackDelay;
         public float m_fOriginalSpeed;
     }
 
@@ -33,7 +34,8 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
     {
         public List<DebuffSpeedCharacterData> m_lstCharacterData;
         public bool m_bDebuffing;
-        public float m_fDebuffMultiplier;
+        public float m_fDebuffAttackDelayMultiplier;
+        public float m_fDebuffSpeedMultiplier;
         public float m_fDebuffDuration;
     }
 
@@ -298,15 +300,15 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    public static void DebuffAllPrisonerSpeed(float fDebuffSpeedMultiplier,float fDebuffDuration)
+    public static void DebuffAllPrisonerSpeed(float fDebuffSpeedMultiplier,float fDebuffDuration, float fDebuffAttackDelayMultiplier)
     {
-        Instance?.MainDebuffAllPrisonerSpeed(fDebuffSpeedMultiplier, fDebuffDuration);
+        Instance?.MainDebuffAllPrisonerSpeed(fDebuffSpeedMultiplier, fDebuffDuration,fDebuffAttackDelayMultiplier);
     }
 
     /// <summary>
     /// 
     /// </summary>
-    void MainDebuffAllPrisonerSpeed(float fDebuffSpeedMultiplier, float fDebuffDuration)
+    void MainDebuffAllPrisonerSpeed(float fDebuffSpeedMultiplier, float fDebuffDuration,float fDebuffAttackDelayMultiplier)
     {
         var lstPrisoner = CGlobal_CharacterManager.GetCharacterList(TagType.Prisoner);
 
@@ -316,7 +318,8 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
         ResetDebuffAllSpeedToOriginal();
 
         m_hDebuffAllSpeedData.m_bDebuffing = true;
-        m_hDebuffAllSpeedData.m_fDebuffMultiplier = fDebuffSpeedMultiplier;
+        m_hDebuffAllSpeedData.m_fDebuffAttackDelayMultiplier = fDebuffAttackDelayMultiplier;
+        m_hDebuffAllSpeedData.m_fDebuffSpeedMultiplier = fDebuffSpeedMultiplier;
         m_hDebuffAllSpeedData.m_fDebuffDuration = fDebuffDuration;
 
         for(int i = 0; i < lstPrisoner.Count; i++)
@@ -332,9 +335,11 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
             m_hDebuffAllSpeedData.m_lstCharacterData.Add(new DebuffSpeedCharacterData
             {
                 m_hBase = hPrisonerBase,
+                m_fOriginalAttackDelay = hPrisonerBase.GetAttackDelay(),
                 m_fOriginalSpeed = hPrisonerBase.GetSpeed(),
             });
 
+            hPrisonerBase.SetAttackDelay(hPrisonerBase.GetAttackDelay() * fDebuffAttackDelayMultiplier);
             hPrisonerBase.SetSpeed(hPrisonerBase.GetSpeed() * fDebuffSpeedMultiplier);
         }
     }
@@ -469,8 +474,12 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
 
         for(int i = 0; i < m_hDebuffAllSpeedData.m_lstCharacterData.Count; i++)
         {
+            if (m_hDebuffAllSpeedData.m_lstCharacterData[i].m_hBase == null)
+                continue;
+
             // Reset to original speed.
-            m_hDebuffAllSpeedData.m_lstCharacterData[i].m_hBase?.SetSpeed(m_hDebuffAllSpeedData.m_lstCharacterData[i].m_fOriginalSpeed);
+            m_hDebuffAllSpeedData.m_lstCharacterData[i].m_hBase.SetAttackDelay(m_hDebuffAllSpeedData.m_lstCharacterData[i].m_fOriginalAttackDelay);
+            m_hDebuffAllSpeedData.m_lstCharacterData[i].m_hBase.SetSpeed(m_hDebuffAllSpeedData.m_lstCharacterData[i].m_fOriginalSpeed);
         }
 
         m_hDebuffAllSpeedData.m_bDebuffing = false;
@@ -507,10 +516,13 @@ public sealed class CGlobal_StatusManager : MonoBehaviour
         {
 
             m_hBase = hPrisonerBase,
+            m_fOriginalAttackDelay = hPrisonerBase.GetAttackDelay(),
             m_fOriginalSpeed = hPrisonerBase.GetSpeed()
         });
 
-        hPrisonerBase.SetSpeed(hPrisonerBase.GetSpeed() * m_hDebuffAllSpeedData.m_fDebuffMultiplier);        
+        
+        hPrisonerBase.SetAttackDelay(hPrisonerBase.GetAttackDelay() * m_hDebuffAllSpeedData.m_fDebuffAttackDelayMultiplier);
+        hPrisonerBase.SetSpeed(hPrisonerBase.GetSpeed() * m_hDebuffAllSpeedData.m_fDebuffSpeedMultiplier);        
     }
 
     #endregion

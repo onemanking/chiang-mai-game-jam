@@ -177,6 +177,11 @@ public class GameManager : MonoBehaviour
         flashWallCouroutine = StartCoroutine(FlashWall());
 	}
 
+    public void WallHeal(float _heal)
+    {
+        m_WallHp.Value += _heal;
+    }
+
 	private IEnumerator FlashWall()
 	{
 		wallMaterial = m_WallRenderer.material;
