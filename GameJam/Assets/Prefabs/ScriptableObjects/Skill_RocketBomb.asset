@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Skill_RocketBomb
   m_EditorClassIdentifier: 
   m_sSkillName: Outbreak Storm
-  m_hSpirte: {fileID: 21300000, guid: 5737f6a58a356cd4fbb626323ead5fb2, type: 3}
+  m_hSpirte: {fileID: 21300000, guid: fbefd0fc1ac5112488c3898ef525f0fe, type: 3}
   m_hCutsceneSprite: {fileID: 21300000, guid: cc01578c7733825489aaeaa4d71eeb33, type: 3}
   m_fCooldown: 5
   m_hStatusData: {fileID: 11400000, guid: d2643aa79af5b224db2a4200cf815ba8, type: 2}
